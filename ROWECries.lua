@@ -1433,7 +1433,8 @@ speciesNames = {
 
 --this runs a lot of times
 function detectCry()
-	local cryaddress = 0x02000080 -- Its a Var with the value 0x4077
+	--local cryaddress = 0x02000082 -- Its a Var with the value 0x4077
+    local cryaddress = 0x0203fffe -- DmaFill16(3, VarGet(VAR_CRY_SPECIES), 0x0203ffff, 0x2);
 	local cryspecies = emu:read16(cryaddress)
 	local species = speciesNames[cryspecies]
     --local scriptdirectory = script.path
@@ -1441,10 +1442,12 @@ function detectCry()
     local filelocation = scriptdirectory .. "/cries/" .. species .. ".mp3"
     local mpvlocation = scriptdirectory .. "/mpv/mpv.exe"
 
-	if cryspecies == currentSpecies or species == "??????????" or species == "bulbasaur" then
+    --console:log("cryspecies " .. emu:read16(cryaddress))
+    --console:log("cryspecies2 " .. emu:read16(cryaddress2))
+	if cryspecies == currentSpecies or species == "??????????" then 
 		species = speciesNames[0]
     elseif file_exists(filelocation) == true then
-        print_file_exists(filelocation)
+        --print_file_exists(filelocation)
 		os.execute(filelocation)
         --os.execute(mpvlocation .. " " .. filelocation)
 		--os.execute("start https://play.pokemonshowdown.com/audio/cries/" .. species .. ".mp3")
@@ -1456,7 +1459,7 @@ end
 --local function read_file(path)
 function read_file(path)
     print_file_exists(path)
-    local file = io.open(path, "rb") -- r read mode and b binary mode
+    local file = io.popen(path, "rb") -- r read mode and b binary mode
     if not file then return nil end
     local content = file:read "*a" -- *a or *all reads the whole file
     file:close()
