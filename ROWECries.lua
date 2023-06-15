@@ -1434,7 +1434,7 @@ speciesNames = {
 --this runs a lot of times
 function detectCry()
 	--local cryaddress = 0x02000082 -- Its a Var with the value 0x4077
-    local cryaddress = 0x0203fffe -- DmaFill16(3, VarGet(VAR_CRY_SPECIES), 0x0203ffff, 0x2);
+    local cryaddress = 0x0203fff0 -- DmaFill16(3, VarGet(VAR_CRY_SPECIES), 0x0203ffff, 0x2);
 	local cryspecies = emu:read16(cryaddress)
 	local species = speciesNames[cryspecies]
     --local scriptdirectory = script.path
