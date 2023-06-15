@@ -1,7 +1,8 @@
 local currentSpecies = 0
 local tempSpecies = 0
-
---require("luacom")
+--Setup here
+local scriptdirectory = "F:/Github/ROWECries" --change this to your folder where you have everything
+local enableAnimeCries = true -- set to true if you want anime cries
 
 local Game = {
 	new = function (self, game)
@@ -1433,23 +1434,23 @@ speciesNames = {
 
 --this runs a lot of times
 function detectCry()
-	--local cryaddress = 0x02000082 -- Its a Var with the value 0x4077
-    local cryaddress = 0x0203fff0 -- DmaFill16(3, VarGet(VAR_CRY_SPECIES), 0x0203ffff, 0x2);
+    local cryaddress = 0x0203fff0 -- DmaFill16(3, VarGet(VAR_CRY_SPECIES), 0x0203fff0, 0x2);
 	local cryspecies = emu:read16(cryaddress)
 	local species = speciesNames[cryspecies]
-    --local scriptdirectory = script.path
-    local scriptdirectory = "F:/Github/ROWECries"
+        
     local filelocation = scriptdirectory .. "/cries/" .. species .. ".mp3"
-    --local filelocation = scriptdirectory .. "/animecries/" .. cryspecies .. ".wav"
-    local mpvlocation = scriptdirectory .. "/mpv/mpv.exe"
+    local animefilelocation = scriptdirectory .. "/animecries/" .. cryspecies .. ".wav"
+	local file = filelocation
 
-    --console:log("cryspecies " .. emu:read16(cryaddress))
-    --console:log("cryspecies2 " .. emu:read16(cryaddress2))
+    if enableAnimeCries == true and cryspecies < 650 then 
+        file = animefilelocation
+    end
+
 	if cryspecies == currentSpecies or species == "??????????" then 
 		species = speciesNames[0]
-    elseif file_exists(filelocation) == true then
+    elseif file_exists(file) == true then
         --print_file_exists(filelocation)
-		os.execute(filelocation)
+		os.execute(file)
         --os.execute(mpvlocation .. " " .. filelocation)
 		--os.execute("start https://play.pokemonshowdown.com/audio/cries/" .. species .. ".mp3")
 		currentSpecies = cryspecies
