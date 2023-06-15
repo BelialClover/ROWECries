@@ -2,7 +2,7 @@ local currentSpecies = 0
 local tempSpecies = 0
 --Setup here
 local scriptdirectory = "F:/Github/ROWECries" --change this to your folder where you have everything
-local enableAnimeCries = true -- set to true if you want anime cries
+local enableAnimeCries = false -- set to true if you want anime cries, if not set it to false
 
 local Game = {
 	new = function (self, game)
@@ -1432,6 +1432,19 @@ speciesNames = {
     [898] = ("calyrex"),
 }
 
+function globalFunction()
+    if detectCryMode() == 1 then
+        enableAnimeCries = false
+    elseif detectCryMode() == 2 then
+        enableAnimeCries = true
+    end 
+
+    if not (detectCryMode() == 0) then 
+        detectCry()
+    end
+
+end
+
 --this runs a lot of times
 function detectCry()
     local cryaddress = 0x0203fff0 -- DmaFill16(3, VarGet(VAR_CRY_SPECIES), 0x0203fff0, 0x2);
@@ -1474,6 +1487,14 @@ function file_exists(path)
     return file ~= nil
 end
 
+function detectCryMode()
+    local address = 0x0203ffe0 -- DmaFill16(3, VarGet(VAR_CRY_SPECIES), 0x0203fff0, 0x2);
+	local read = emu:read16(address)
+
+    return read
+    --0 Disable, 1 Normal cries, 2 Anime Cries
+end
+
 function print_file_exists(path)
     if file_exists(path) == true then
         console:log("File " .. path .. " Exist")
@@ -1501,7 +1522,7 @@ function updateBuffer()
 end
 
 callbacks:add("start", detectGame)
-callbacks:add("frame", detectCry)
+callbacks:add("frame", globalFunction)
 if emu then
 	--this runs first
 	if not welcomeBuffer then
