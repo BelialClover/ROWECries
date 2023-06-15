@@ -1045,7 +1045,7 @@ speciesNames = {
 
 --this is run a lot of times
 function detectCry()
-	local cryaddress = 0x02000080
+	local cryaddress = 0x02000080 -- Its a Var with the value 0x4077
 	local cryspecies = emu:read16(cryaddress)
 	local species = speciesNames[cryspecies]
 
