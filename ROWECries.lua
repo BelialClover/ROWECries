@@ -528,6 +528,7 @@ function detectGame()
 	end
 end
 
+--this is the filename of each cry
 speciesNames = {
 	[0] = ("??????????"),
     [1] = ("bulbasaur"),
@@ -938,6 +939,7 @@ speciesNames = {
     [406] = ("budew"),
 }
 
+--this is run a lot of times
 function detectCry()
 	local cryaddress = 0x02000080
 	local cryspecies = emu:read16(cryaddress)
@@ -947,11 +949,7 @@ function detectCry()
 		species = speciesNames[0]
 	else
 		--os.execute("start smplayer " .. script.dir .. "/" .. species .. ".mp3")
-		os.execute("start smplayer D:/WSL/Decomps/pokeemerald_r/cries/" .. species .. ".mp3")
-
-		
-		--os.execute("start musicbee " ..script.dir .."/cries/" .. species .. ".mp3")
-		--os.execute("start vlc " ..script.dir .."/cries/" .. species .. ".mp3")
+		os.execute("start smplayer F:/Github/ROWECries/" .. species .. ".mp3")
 		--os.execute("start https://play.pokemonshowdown.com/audio/cries/" .. species .. ".mp3")
 		currentSpecies = cryspecies
 		wait(6000)
@@ -965,7 +963,7 @@ end
 
 function printWelcomeMessage(buffer)
 	buffer:clear()
-	buffer:print(string.format("Welcome to R.O.W.E. Cries make sure you set up the game correctly. %-10s\n", 0))
+	buffer:print(string.format("Welcome to R.O.W.E. Cries make sure you set up the game correctly."))
 end
 
 function updateBuffer()
@@ -978,11 +976,9 @@ end
 callbacks:add("start", detectGame)
 callbacks:add("frame", detectCry)
 if emu then
+	--this is run first
 	if not welcomeBuffer then
 		welcomeBuffer = console:createBuffer("Welcome")
 	end
-
 	printWelcomeMessage(welcomeBuffer)
-	--detectGame()
-	--detectCry()
 end
