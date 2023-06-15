@@ -1440,6 +1440,7 @@ function detectCry()
     --local scriptdirectory = script.path
     local scriptdirectory = "F:/Github/ROWECries"
     local filelocation = scriptdirectory .. "/cries/" .. species .. ".mp3"
+    --local filelocation = scriptdirectory .. "/animecries/" .. cryspecies .. ".wav"
     local mpvlocation = scriptdirectory .. "/mpv/mpv.exe"
 
     --console:log("cryspecies " .. emu:read16(cryaddress))
