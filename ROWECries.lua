@@ -3,6 +3,132 @@ local tempSpecies = 0
 --Setup here
 local scriptdirectory = "F:/Github/ROWECries" --change this to your folder where you have everything
 local enableAnimeCries = false -- set to true if you want anime cries, if not set it to false
+DATA_FOLDER = scriptdirectory .. "./cries"
+
+function globalFunction()
+    if detectCryMode() == 1 then
+        enableAnimeCries = false
+    elseif detectCryMode() == 2 then
+        enableAnimeCries = true
+    end 
+
+    if not (detectCryMode() == 0) then 
+        detectCry()
+    end
+
+end
+
+--this runs a lot of times
+function detectCry()
+    local cryaddress = 0x0203fff0 -- DmaFill16(3, VarGet(VAR_CRY_SPECIES), 0x0203fff0, 0x2);
+	local cryspecies = emu:read16(cryaddress)
+	local species = speciesNames[cryspecies]
+
+    local filelocation = DATA_FOLDER .. "/" .. species .. ".mp3"
+    local animefilelocation = DATA_FOLDER .. "/" .. cryspecies .. ".wav"
+	local file = filelocation
+
+    if enableAnimeCries == true and cryspecies < 650 then 
+        file = animefilelocation
+    end
+
+	if cryspecies == currentSpecies or species == "??????????" then 
+		species = speciesNames[0]
+    elseif file_exists(file) == true then
+        --print_file_exists(filelocation)
+		os.execute(file)
+        --os.execute(mpvlocation .. " " .. filelocation)
+		--os.execute("start https://play.pokemonshowdown.com/audio/cries/" .. species .. ".mp3")
+		currentSpecies = cryspecies
+		wait(6000)
+	end
+end
+
+--local function read_file(path)
+function read_file(path)
+    print_file_exists(path)
+    local file = io.popen(path, "rb") -- r read mode and b binary mode
+    if not file then return nil end
+    local content = file:read "*a" -- *a or *all reads the whole file
+    file:close()
+    --return content
+end
+
+function file_exists(path)
+    local file = io.open(path, "rb")
+    if file then file:close() end
+    return file ~= nil
+end
+
+function detectCryMode()
+    local address = 0x0203ffe0 -- DmaFill16(3, VarGet(VAR_CRY_SPECIES), 0x0203fff0, 0x2);
+	local read = emu:read16(address)
+
+    return read
+    --0 Disable, 1 Normal cries, 2 Anime Cries
+end
+
+function print_file_exists(path)
+    if file_exists(path) == true then
+        console:log("File " .. path .. " Exist")
+    else
+        console:log("File " .. path .. " Does Not Exist")
+    end
+end
+
+function printMonName(species, buffer)
+	buffer:clear()
+	buffer:print(string.format("%-10s\n", species))
+end
+
+function printWelcomeMessage(buffer)
+	buffer:clear()
+    local filelocation = DATA_FOLDER .. "/abomasnow.mp3"
+    if file_exists(filelocation) == true then
+        buffer:print(string.format("Welcome to R.O.W.E. Cries everything seems to be set up correctly."))
+    else
+	    buffer:print(string.format("Welcome to R.O.W.E. Cries, the Cry directory does not seem to be set up correctly."))
+    end
+end
+
+function updateBuffer()
+	if not game or not partyBuffer then
+		return
+	end
+	printPartyStatus(game, partyBuffer)
+end
+
+function detectGame()
+	local checksum = 0
+	for i, v in ipairs({emu:checksum(C.CHECKSUM.CRC32):byte(1, 4)}) do
+		checksum = checksum * 256 + v
+	end
+	game = gameCrc32[checksum]
+	if not game then
+		game = gameCodes[emu:getGameCode()]
+	end
+
+	if not game then
+		console:error("Unknown game!")
+	else
+		console:log("Found game: " .. game.name)
+		if not partyBuffer then
+			partyBuffer = console:createBuffer("Party")
+		end
+	end
+end
+
+callbacks:add("start", detectGame)
+callbacks:add("frame", globalFunction)
+if emu then
+	--this runs first
+	if not welcomeBuffer then
+		welcomeBuffer = console:createBuffer("Welcome")
+	end
+	printWelcomeMessage(welcomeBuffer)
+end
+
+-------------------------------------------------------------------------------------------------
 
 local Game = {
 	new = function (self, game)
@@ -506,26 +632,6 @@ function printPartyStatus(game, buffer)
 			game:getSpeciesName(mon.species),
 			mon.hp,
 			mon.maxHP))
-	end
-end
-
-function detectGame()
-	local checksum = 0
-	for i, v in ipairs({emu:checksum(C.CHECKSUM.CRC32):byte(1, 4)}) do
-		checksum = checksum * 256 + v
-	end
-	game = gameCrc32[checksum]
-	if not game then
-		game = gameCodes[emu:getGameCode()]
-	end
-
-	if not game then
-		console:error("Unknown game!")
-	else
-		console:log("Found game: " .. game.name)
-		if not partyBuffer then
-			partyBuffer = console:createBuffer("Party")
-		end
 	end
 end
 
@@ -1431,102 +1537,3 @@ speciesNames = {
     [897] = ("spectrier"),
     [898] = ("calyrex"),
 }
-
-function globalFunction()
-    if detectCryMode() == 1 then
-        enableAnimeCries = false
-    elseif detectCryMode() == 2 then
-        enableAnimeCries = true
-    end 
-
-    if not (detectCryMode() == 0) then 
-        detectCry()
-    end
-
-end
-
---this runs a lot of times
-function detectCry()
-    local cryaddress = 0x0203fff0 -- DmaFill16(3, VarGet(VAR_CRY_SPECIES), 0x0203fff0, 0x2);
-	local cryspecies = emu:read16(cryaddress)
-	local species = speciesNames[cryspecies]
-        
-    local filelocation = scriptdirectory .. "/cries/" .. species .. ".mp3"
-    local animefilelocation = scriptdirectory .. "/animecries/" .. cryspecies .. ".wav"
-	local file = filelocation
-
-    if enableAnimeCries == true and cryspecies < 650 then 
-        file = animefilelocation
-    end
-
-	if cryspecies == currentSpecies or species == "??????????" then 
-		species = speciesNames[0]
-    elseif file_exists(file) == true then
-        --print_file_exists(filelocation)
-		os.execute(file)
-        --os.execute(mpvlocation .. " " .. filelocation)
-		--os.execute("start https://play.pokemonshowdown.com/audio/cries/" .. species .. ".mp3")
-		currentSpecies = cryspecies
-		wait(6000)
-	end
-end
-
---local function read_file(path)
-function read_file(path)
-    print_file_exists(path)
-    local file = io.popen(path, "rb") -- r read mode and b binary mode
-    if not file then return nil end
-    local content = file:read "*a" -- *a or *all reads the whole file
-    file:close()
-    --return content
-end
-
-function file_exists(path)
-    local file = io.open(path, "rb")
-    if file then file:close() end
-    return file ~= nil
-end
-
-function detectCryMode()
-    local address = 0x0203ffe0 -- DmaFill16(3, VarGet(VAR_CRY_SPECIES), 0x0203fff0, 0x2);
-	local read = emu:read16(address)
-
-    return read
-    --0 Disable, 1 Normal cries, 2 Anime Cries
-end
-
-function print_file_exists(path)
-    if file_exists(path) == true then
-        console:log("File " .. path .. " Exist")
-    else
-        console:log("File " .. path .. " Does Not Exist")
-    end
-end
-
-function printMonName(species, buffer)
-	buffer:clear()
-	buffer:print(string.format("%-10s\n", species))
-end
-
-function printWelcomeMessage(buffer)
-	buffer:clear()
-    local scriptdirectory = math.pi
-	buffer:print(string.format("Welcome to R.O.W.E. Cries make sure you set up the game correctly."))
-end
-
-function updateBuffer()
-	if not game or not partyBuffer then
-		return
-	end
-	printPartyStatus(game, partyBuffer)
-end
-
-callbacks:add("start", detectGame)
-callbacks:add("frame", globalFunction)
-if emu then
-	--this runs first
-	if not welcomeBuffer then
-		welcomeBuffer = console:createBuffer("Welcome")
-	end
-	printWelcomeMessage(welcomeBuffer)
-end
