@@ -4,6 +4,11 @@ local tempSpecies = 0
 local scriptdirectory = "F:/Github/ROWECries" --change this to your folder where you have everything
 local enableAnimeCries = false -- set to true if you want anime cries, if not set it to false
 DATA_FOLDER = scriptdirectory .. "./cries"
+local currentMysteryGift = 0
+--Addresses
+local adress_currentcry = 0x0203fff0 -- DmaFill16(3, VarGet(VAR_CRY_SPECIES), 0x0203fff0, 0x2);
+local adress_crymode = 0x0203ffe0 -- DmaFill16(3, VarGet(VAR_CRY_SPECIES), 0x0203fff0, 0x2);
+local adress_test = 0x0203ffd0
 
 function globalFunction()
     if detectCryMode() == 1 then
@@ -20,29 +25,42 @@ end
 
 --this runs a lot of times
 function detectCry()
-    local cryaddress = 0x0203fff0 -- DmaFill16(3, VarGet(VAR_CRY_SPECIES), 0x0203fff0, 0x2);
-	local cryspecies = emu:read16(cryaddress)
+	local cryspecies = emu:read16(adress_currentcry)
 	local species = speciesNames[cryspecies]
 
     local filelocation = DATA_FOLDER .. "/" .. species .. ".mp3"
     local animefilelocation = DATA_FOLDER .. "/" .. cryspecies .. ".wav"
 	local file = filelocation
 
+    emu:write16(adress_test, currentMysteryGift)
+    
     if enableAnimeCries == true and cryspecies < 650 then 
         file = animefilelocation
     end
 
 	if cryspecies == currentSpecies or species == "??????????" then 
 		species = speciesNames[0]
+		wait(6000)
     elseif file_exists(file) == true then
-        --print_file_exists(filelocation)
-		os.execute(file)
-        --os.execute(mpvlocation .. " " .. filelocation)
-		--os.execute("start https://play.pokemonshowdown.com/audio/cries/" .. species .. ".mp3")
+		os.execute(file) --Play the Cry
 		currentSpecies = cryspecies
 		wait(6000)
 	end
 end
+
+function setMysteryGift(value)
+    currentMysteryGift = value
+end
+
+function setPortMG(id)
+    if not server:accept() == nil then
+        currentMysteryGift = server:accept()
+        console:log("Mystery Gift Received " .. server:accept() .. " Exist")
+    else
+        console:log("Mystery Gift Error")
+    end
+end
+
 
 --local function read_file(path)
 function read_file(path)
@@ -61,8 +79,7 @@ function file_exists(path)
 end
 
 function detectCryMode()
-    local address = 0x0203ffe0 -- DmaFill16(3, VarGet(VAR_CRY_SPECIES), 0x0203fff0, 0x2);
-	local read = emu:read16(address)
+	local read = emu:read16(adress_crymode)
 
     return read
     --0 Disable, 1 Normal cries, 2 Anime Cries
@@ -128,6 +145,115 @@ if emu then
 	printWelcomeMessage(welcomeBuffer)
 end
 
+-------------------------------------------------------------------------------------------------
+--Socket Test
+lastkeys = nil
+server = nil
+ST_sockets = {}
+nextID = 1
+
+local KEY_NAMES = { "A", "B", "s", "S", "<", ">", "^", "v", "R", "L" }
+
+function ST_stop(id)
+	local sock = ST_sockets[id]
+	ST_sockets[id] = nil
+	sock:close()
+end
+
+function ST_format(id, msg, isError)
+	local prefix = "Socket " .. id
+	if isError then
+		prefix = prefix .. " Error: "
+	else
+		prefix = prefix .. " Received: "
+	end
+
+	return prefix .. msg
+end
+
+function ST_error(id, err)
+	console:error(ST_format(id, err, true))
+	ST_stop(id)
+end
+
+function ST_received(id)
+	local sock = ST_sockets[id]
+    
+	if not sock then return end
+	while true do
+		local p, err = sock:receive(1024)
+		if p then
+			console:log(ST_format(id, p:match("^(.-)%s*$")))
+            currentMysteryGift = tonumber(p)
+            console:log("New Mystery Gift ID: " .. currentMysteryGift)
+		else
+			if err ~= socket.ERRORS.AGAIN then
+				console:error(ST_format(id, err, true))
+				ST_stop(id)
+			end
+			return
+		end
+	end
+end
+
+function ST_scankeys()
+	local keys = emu:getKeys()
+	if keys ~= lastkeys then
+		lastkeys = keys
+		local msg = "["
+		for i, k in ipairs(KEY_NAMES) do
+			if (keys & (1 << (i - 1))) == 0 then
+				msg = msg .. " "
+			else
+				msg = msg .. k;
+			end
+		end
+		msg = msg .. "]\n"
+		for id, sock in pairs(ST_sockets) do
+			if sock then sock:send(msg) end
+		end
+	end
+end
+
+function ST_accept()
+	local sock, err = server:accept()
+	if err then
+		console:error(ST_format("Accept", err, true))
+		return
+	end
+	local id = nextID
+	nextID = id + 1
+	ST_sockets[id] = sock
+	sock:add("received", function() ST_received(id) end)
+	sock:add("error", function() ST_error(id) end)
+	console:log(ST_format(id, "Connected"))
+end
+
+callbacks:add("keysRead", ST_scankeys)
+
+local port = 8888
+server = nil
+while not server do
+	server, err = socket.bind(nil, port)
+	if err then
+		if err == socket.ERRORS.ADDRESS_IN_USE then
+			port = port + 1
+		else
+			console:error(ST_format("Bind", err, true))
+			break
+		end
+	else
+		local ok
+		ok, err = server:listen()
+		if err then
+			server:close()
+			console:error(ST_format("Listen", err, true))
+		else
+			console:log("Socket Server Test: Listening on port " .. port)
+			server:add("received", ST_accept)
+		end
+	end
+end
 -------------------------------------------------------------------------------------------------
 
 local Game = {
