@@ -195,15 +195,11 @@ end
 
 function setMysteryGift(value)
 	local MysteryGift = emu:read16(adress_mysterygift)
-
-    if MysteryGift ~= currentMysteryGift then
-        currentMysteryGift = value
-        --console:log("New Mystery Gift ID: " .. currentMysteryGift)
-        console:log("A Mystery Gift was received!")
-        emu:write16(adress_mysterygift, currentMysteryGift) -- Sets the Mystery Gift
-    else
-        console:log("You already received this gift!")
-    end
+    
+	currentMysteryGift = value
+    --console:log("New Mystery Gift ID: " .. currentMysteryGift)
+    console:log("A Mystery Gift was received!")
+    emu:write16(adress_mysterygift, currentMysteryGift) -- Sets the Mystery Gift
 end
 
 --Socket Server
