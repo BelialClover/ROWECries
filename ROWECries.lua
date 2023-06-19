@@ -4,10 +4,11 @@ local tempSpecies = 0
 local scriptdirectory = "F:/Github/ROWECries" --change this to your folder where you have everything
 local enableAnimeCries = false -- set to true if you want anime cries, if not set it to false
 DATA_FOLDER = scriptdirectory .. "./cries"
+ANIME_DATA_FOLDER = scriptdirectory .. "./animecries"
 local currentMysteryGift = 0
 --Addresses
-local adress_currentcry = 0x0203fff0 -- DmaFill16(3, VarGet(VAR_CRY_SPECIES), 0x0203fff0, 0x2);
-local adress_crymode = 0x0203ffe0 -- DmaFill16(3, VarGet(VAR_CRY_SPECIES), 0x0203fff0, 0x2);
+local adress_currentcry = 0x0203fff0   -- DmaFill16(3, VarGet(VAR_CRY_SPECIES), 0x0203fff0, 0x2);
+local adress_crymode = 0x0203ffe0      -- DmaFill16(3, VarGet(VAR_CRY_SPECIES), 0x0203fff0, 0x2);
 local adress_mysterygift = 0x0203ffd0
 
 function globalFunction()
@@ -29,7 +30,7 @@ function detectCry()
 	local species = speciesNames[cryspecies]
 
     local filelocation = DATA_FOLDER .. "/" .. species .. ".mp3"
-    local animefilelocation = DATA_FOLDER .. "/" .. cryspecies .. ".wav"
+    local animefilelocation = ANIME_DATA_FOLDER .. "/" .. cryspecies .. ".wav"
 	local file = filelocation
     
     if enableAnimeCries == true and cryspecies < 650 then 
@@ -303,7 +304,7 @@ while not server do
 			server:close()
 			console:error(ST_format("Listen", err, true))
 		else
-			console:log("R.O.W.E. Companion server working, ready to connect your browser browser")
+			console:log("R.O.W.E. Companion server working, ready to connect to your browser")
 			server:add("received", ST_accept)
 		end
 	end
