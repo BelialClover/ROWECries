@@ -236,9 +236,8 @@ function socketMsgToFunction(msg)
             createOubreak()
         end
     --Roamer
-    Roamer_percent
         --species
-        roamerSpecies_b,  roamerSpecies_e   = string.find(msg, "roamerspecies")
+        roamerSpecies_b,  roamerSpecies_e  = string.find(msg, "roamerspecies")
         roamerSpecies_b2, roamerSpecies_e2 = string.find(msg, "received")
         if roamerSpecies_b ~= null then
             type   = string.sub(msg, roamerSpecies_b, roamerSpecies_e)
@@ -246,7 +245,7 @@ function socketMsgToFunction(msg)
                 number = tonumber(string.sub(msg, roamerSpecies_e + 1, roamerSpecies_b2 - 1))
                 Roamer_species = number
                 Roamer_percent = 1
-                console:log("Roamer Species Working: " .. roamerSpecies .. " Percent: " .. Roamer_percent)
+                console:log("Roamer Species Working: " .. Roamer_species .. " Percent: " .. Roamer_percent)
             end
         end
         --level
