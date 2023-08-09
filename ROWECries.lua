@@ -1,8 +1,8 @@
 local currentSpecies = 0
 local tempSpecies = 0
 --Setup here
-local scriptdirectory = "F:/Github/ROWECries" --change this to your folder where you have everything
-local enableAnimeCries = false -- set to true if you want anime cries, if not set it to false
+local scriptdirectory = "F:/Github/ROWECries" -- change this to your folder where you have everything
+local enableAnimeCries = false                -- set to true if you want anime cries, if not set it to false
 DATA_FOLDER = scriptdirectory .. "./cries"
 ANIME_DATA_FOLDER = scriptdirectory .. "./animecries"
 local currentMysteryGift = 0
@@ -12,15 +12,17 @@ local adress_crymode = 0x0203ffe0      -- DmaFill16(3, VarGet(VAR_CRY_SPECIES), 
 local adress_mysterygift = 0x0203ffd0
 
 function globalFunction()
-    if detectCryMode() == 1 then
+    if detectCryMode() == 2 then
         enableAnimeCries = false
-    elseif detectCryMode() == 2 then
+    elseif detectCryMode() == 3 then
         enableAnimeCries = true
     end 
 
     --Play Pokémon Cry
     if not (detectCryMode() == 0) then 
-        detectCry()
+        if not (detectCryMode() == 1) then 
+            detectCry()
+        end
     end
 end
 
