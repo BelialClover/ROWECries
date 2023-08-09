@@ -7,23 +7,43 @@ DATA_FOLDER = scriptdirectory .. "./cries"
 ANIME_DATA_FOLDER = scriptdirectory .. "./animecries"
 local currentMysteryGift = 0
 --Addresses
-local adress_currentcry = 0x0203fff0   -- DmaFill16(3, VarGet(VAR_CRY_SPECIES), 0x0203fff0, 0x2);
-local adress_crymode = 0x0203ffe0      -- DmaFill16(3, VarGet(VAR_CRY_SPECIES), 0x0203fff0, 0x2);
+--Cries
+local adress_currentcry  = 0x0203fff0      -- DmaFill16(3, VarGet(VAR_CRY_SPECIES), 0x0203fff0, 0x2);
+local adress_crymode     = 0x0203ffe0      -- DmaFill16(3, VarGet(VAR_CRY_SPECIES), 0x0203fff0, 0x2);
+--Mystery Gift
 local adress_mysterygift = 0x0203ffd0
+--Outbreak
+local adress_outbreak_species     = 0x0203ffc0
+local adress_outbreak_mapnum      = 0x0203ffb0
+local adress_outbreak_group       = 0x0203ffa0
+local adress_outbreak_level       = 0x0203fef0
+local adress_outbreak_numbadges   = 0x0203fee0
+local adress_outbreak_probability = 0x0203fed0
+local adress_outbreak_move1       = 0x0203fec0
+--outbreak stuff
+local Outbreak_species = 0
+local Outbreak_mapnum = 0
+local Outbreak_mapgroup = 0
+local Outbreak_move1 = 0
+local Outbreak_probability = 0
+local Outbreak_level = 0
+local Outbreak_badges = 0
+local Outbreak_percent = 0
 
 function globalFunction()
-    if detectCryMode() == 2 then
-        enableAnimeCries = false
-    elseif detectCryMode() == 3 then
-        enableAnimeCries = true
-    end 
+    --Cries
+    --if detectCryMode() == 2 then
+    --    enableAnimeCries = false
+    --elseif detectCryMode() == 3 then
+    --    enableAnimeCries = true
+    --end 
 
     --Play Pokémon Cry
-    if not (detectCryMode() == 0) then 
-        if not (detectCryMode() == 1) then 
-            detectCry()
-        end
-    end
+    --if not (detectCryMode() == 0) then 
+    --    if not (detectCryMode() == 1) then 
+    --        detectCry()
+    --    end
+    --end
 end
 
 --this runs a lot of times
@@ -93,7 +113,7 @@ function printWelcomeMessage(buffer)
 end
 
 --callbacks:add("start", detectGame)
---callbacks:add("frame", globalFunction) -- Cries support
+callbacks:add("frame", globalFunction) -- Cries support
 if emu then
 	--this runs first
 	if not welcomeBuffer then
@@ -104,105 +124,133 @@ end
 
 --This checks the socket data
 function socketMsgToFunction(msg)
-    --Mystery Gift 1
-    _, _, url, _ = string.find(msg, '(%s*) /mysterygift1 HTTP/1.1')
-    if url ~= null then
-        setMysteryGift(1)
+    --Mystery gift
+    mysterygift_b,  mysterygift_e  = string.find(msg, "mysterygift")
+    mysterygift_b2, mysterygift_e2 = string.find(msg, "received")
+    if mysterygift_b ~= null then
+        type   = string.sub(msg, mysterygift_b, mysterygift_e)
+        console:log("mysterygift Working: " .. type)
+        if type == "mysterygift" then
+            number = string.sub(msg, mysterygift_e + 1, mysterygift_b2 - 1)
+            setMysteryGift(number)
+        end
     end
+    --Outbreak
+        --species
+        outbreakSpecies_b,  outbreakSpecies_e   = string.find(msg, "outbreakspecies")
+        outbreakSpecies_b2, outbreakSpecies_e2  = string.find(msg, "received")
+        if outbreakSpecies_b ~= null then
+            type   = string.sub(msg, outbreakSpecies_b, outbreakSpecies_e)
+            if type == "outbreakspecies" then
+                number = tonumber(string.sub(msg, outbreakSpecies_e + 1, outbreakSpecies_b2 - 1))
+                Outbreak_species = number
+                Outbreak_percent = 1
+                --console:log("Outbreak Species Working: " .. Outbreak_species .. " Percent: " .. Outbreak_percent)
+            end
+        end
+        --mapnum
+        outbreakMapNum_b,  outbreakMapNum_e  = string.find(msg, "outbreakmapnum")
+        outbreakMapNum_b2, outbreakMapNum_e2 = string.find(msg, "received")
+        if outbreakMapNum_b ~= null then
+            type   = string.sub(msg, outbreakMapNum_b, outbreakMapNum_e)
+            if type == "outbreakmapnum" then
+                number = tonumber(string.sub(msg, outbreakMapNum_e + 1, outbreakMapNum_b2 - 1))
+                Outbreak_mapnum = number
+                Outbreak_percent = Outbreak_percent + 1
+                --console:log("Outbreak MapNum Working: " .. Outbreak_mapnum .. " Percent: " .. Outbreak_percent)
+            end
+        end
+        --mapgroup
+        outbreakMapGroup_b,  outbreakMapGroup_e   = string.find(msg, "outbreakmapgroup")
+        outbreakMapGroup_b2, outbreakMapGroup_e2 = string.find(msg, "received")
+        if outbreakMapGroup_b ~= null then
+            type   = string.sub(msg, outbreakMapGroup_b, outbreakMapGroup_e)
+            if type == "outbreakmapgroup" then
+                number = tonumber(string.sub(msg, outbreakMapGroup_e + 1, outbreakMapGroup_b2 - 1))
+                Outbreak_mapgroup = number
+                Outbreak_percent = Outbreak_percent + 1
+                --console:log("Outbreak MapGroup Working: " .. Outbreak_mapgroup .. " Percent: " .. Outbreak_percent)
+            end
+        end
+        --move1
+        outbreakMove1_b, outbreakMove1_e   = string.find(msg, "outbreakmove1")
+        outbreakMove1_b2, outbreakMove1_e2 = string.find(msg, "received")
+        if outbreakMove1_b ~= null then
+            type   = string.sub(msg, outbreakMove1_b, outbreakMove1_e)
+            if type == "outbreakmove1" then
+                number = tonumber(string.sub(msg, outbreakMove1_e + 1, outbreakMove1_b2 - 1))
+                Outbreak_move1 = number
+                Outbreak_percent = Outbreak_percent + 1
+                --console:log("Outbreak Move 1 Working: " .. Outbreak_move1 .. " Percent: " .. Outbreak_percent)
+            end
+        end
+        --probability
+        outbreakProbability_b,  outbreakProbability_e   = string.find(msg, "outbreakprobability")
+        outbreakProbability_b2, outbreakProbability_e2 = string.find(msg, "received")
+        if outbreakProbability_b ~= null then
+            type   = string.sub(msg, outbreakProbability_b, outbreakProbability_e)
+            if type == "outbreakprobability" then
+                number = tonumber(string.sub(msg, outbreakProbability_e + 1, outbreakProbability_b2 - 1))
+                Outbreak_probability = number
+                Outbreak_percent = Outbreak_percent + 1
+                --console:log("Outbreak Probability Working: " .. Outbreak_probability .. " Percent: " .. Outbreak_percent)
+            end
+        end
+        --level
+        outbreakLevel_b, outbreakLevel_e   = string.find(msg, "outbreaklevel")
+        outbreakLevel_b2, outbreakLevel_e2 = string.find(msg, "received")
+        if outbreakLevel_b ~= null then
+            type   = string.sub(msg, outbreakLevel_b, outbreakLevel_e)
+            if type == "outbreaklevel" then
+                number = tonumber(string.sub(msg, outbreakLevel_e + 1, outbreakLevel_b2 - 1))
+                Outbreak_level = number
+                Outbreak_percent = Outbreak_percent + 1
+                --console:log("Outbreak Level Working: " .. Outbreak_level .. " Percent: " .. Outbreak_percent)
+            end
+        end
+        --badges
+        outbreakBadges_b,  outbreakBadges_e  = string.find(msg, "outbreabadges")
+        outbreakBadges_b2, outbreakBadges_e2 = string.find(msg, "received")
+        if outbreakBadges_b ~= null then
+            type   = string.sub(msg, outbreakBadges_b, outbreakBadges_e)
+            if type == "outbreabadges" then
+                number = tonumber(string.sub(msg, outbreakBadges_e + 1, outbreakBadges_b2 - 1))
+                Outbreak_badges = number
+                Outbreak_percent = Outbreak_percent + 1
+                --console:log("Outbreak Badges Working: " .. Outbreak_badges .. " Percent: " .. Outbreak_percent)
+            end
+        end
 
-    --Mystery Gift 2
-    _, _, url, _ = string.find(msg, '(%s*) /mysterygift2 HTTP/1.1')
-    if url ~= null then
-        setMysteryGift(2)
-    end
-
-    --Mystery Gift 3
-    _, _, url, _ = string.find(msg, '(%s*) /mysterygift3 HTTP/1.1')
-    if url ~= null then
-        setMysteryGift(3)
-    end
-
-    --Mystery Gift 4
-    _, _, url, _ = string.find(msg, '(%s*) /mysterygift4 HTTP/1.1')
-    if url ~= null then
-        setMysteryGift(4)
-    end
-
-    --Mystery Gift 5
-    _, _, url, _ = string.find(msg, '(%s*) /mysterygift5 HTTP/1.1')
-    if url ~= null then
-        setMysteryGift(5)
-    end
-
-    --Mystery Gift 6
-    _, _, url, _ = string.find(msg, '(%s*) /mysterygift6 HTTP/1.1')
-    if url ~= null then
-        setMysteryGift(6)
-    end
-
-    --Mystery Gift 7
-    _, _, url, _ = string.find(msg, '(%s*) /mysterygift7 HTTP/1.1')
-    if url ~= null then
-        setMysteryGift(7)
-    end
-
-    --Mystery Gift 8
-    _, _, url, _ = string.find(msg, '(%s*) /mysterygift8 HTTP/1.1')
-    if url ~= null then
-        setMysteryGift(8)
-    end
-
-    --Mystery Gift 9
-    _, _, url, _ = string.find(msg, '(%s*) /mysterygift9 HTTP/1.1')
-    if url ~= null then
-        setMysteryGift(9)
-    end
-    
-    --Mystery Gift 10
-    _, _, url, _ = string.find(msg, '(%s*) /mysterygift10 HTTP/1.1')
-    if url ~= null then
-        setMysteryGift(10)
-    end
-    
-    --Mystery Gift 11
-    _, _, url, _ = string.find(msg, '(%s*) /mysterygift11 HTTP/1.1')
-    if url ~= null then
-        setMysteryGift(11)
-    end
-
-    --Mystery Gift 12
-    _, _, url, _ = string.find(msg, '(%s*) /mysterygift12 HTTP/1.1')
-    if url ~= null then
-        setMysteryGift(12)
-    end
-
-    --Mystery Gift 13
-    _, _, url, _ = string.find(msg, '(%s*) /mysterygift13 HTTP/1.1')
-    if url ~= null then
-        setMysteryGift(13)
-    end
-    
-    --Mystery Gift 14
-    _, _, url, _ = string.find(msg, '(%s*) /mysterygift14 HTTP/1.1')
-    if url ~= null then
-        setMysteryGift(14)
-    end
-    
-    --Mystery Gift 15
-    _, _, url, _ = string.find(msg, '(%s*) /mysterygift15 HTTP/1.1')
-    if url ~= null then
-        setMysteryGift(15)
-    end
+        if(Outbreak_percent == 7) then
+            createOubreak()
+        end
 end
 
 
 function setMysteryGift(value)
 	local MysteryGift = emu:read16(adress_mysterygift)
     
-	currentMysteryGift = value
-    --console:log("New Mystery Gift ID: " .. currentMysteryGift)
+	currentMysteryGift = tonumber(value)
+    
+    console:log("New Mystery Gift ID: " .. currentMysteryGift)
     console:log("A Mystery Gift was received!")
     emu:write16(adress_mysterygift, currentMysteryGift) -- Sets the Mystery Gift
+end
+
+function createOubreak()
+    if not (Outbreak_species == 0) then 
+        local species = speciesNames[Outbreak_species]
+        console:log("An Outbreak of " .. species .. " was found!")
+        --console:log("An Outbreak of was found!")
+        emu:write16(adress_outbreak_species,     Outbreak_species)
+        emu:write16(adress_outbreak_mapnum,      Outbreak_mapnum)
+        emu:write16(adress_outbreak_group,       Outbreak_mapgroup)
+        emu:write16(adress_outbreak_level,       Outbreak_level)
+        emu:write16(adress_outbreak_numbadges,   Outbreak_badges)
+        emu:write16(adress_outbreak_probability, Outbreak_probability)
+        emu:write16(adress_outbreak_move1,       Outbreak_move1)
+        Outbreak_percent = 0
+    end
 end
 
 --Socket Server
