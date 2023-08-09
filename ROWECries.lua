@@ -21,14 +21,25 @@ local adress_outbreak_numbadges   = 0x0203fee0
 local adress_outbreak_probability = 0x0203fed0
 local adress_outbreak_move1       = 0x0203fec0
 --outbreak stuff
-local Outbreak_species = 0
-local Outbreak_mapnum = 0
-local Outbreak_mapgroup = 0
-local Outbreak_move1 = 0
+local Outbreak_species     = 0
+local Outbreak_mapnum      = 0
+local Outbreak_mapgroup    = 0
+local Outbreak_move1       = 0
 local Outbreak_probability = 0
-local Outbreak_level = 0
-local Outbreak_badges = 0
-local Outbreak_percent = 0
+local Outbreak_level       = 0
+local Outbreak_badges      = 0
+local Outbreak_percent     = 0
+--roamer stuff
+local Roamer_species = 0
+local Roamer_level   = 0
+local Roamer_num     = 0
+local Roamer_badges  = 0
+local Roamer_percent = 0
+--Addresses
+local adress_roamer_species = 0x0203feb0
+local adress_roamer_level   = 0x0203fea0
+local adress_roamer_num     = 0x0203fdf0
+local adress_roamer_badges  = 0x0203fde0
 
 function globalFunction()
     --Cries
@@ -209,11 +220,11 @@ function socketMsgToFunction(msg)
             end
         end
         --badges
-        outbreakBadges_b,  outbreakBadges_e  = string.find(msg, "outbreabadges")
+        outbreakBadges_b,  outbreakBadges_e  = string.find(msg, "outbreakbadges")
         outbreakBadges_b2, outbreakBadges_e2 = string.find(msg, "received")
         if outbreakBadges_b ~= null then
             type   = string.sub(msg, outbreakBadges_b, outbreakBadges_e)
-            if type == "outbreabadges" then
+            if type == "outbreakbadges" then
                 number = tonumber(string.sub(msg, outbreakBadges_e + 1, outbreakBadges_b2 - 1))
                 Outbreak_badges = number
                 Outbreak_percent = Outbreak_percent + 1
@@ -223,6 +234,60 @@ function socketMsgToFunction(msg)
 
         if(Outbreak_percent == 7) then
             createOubreak()
+        end
+    --Roamer
+    Roamer_percent
+        --species
+        roamerSpecies_b,  roamerSpecies_e   = string.find(msg, "roamerspecies")
+        roamerSpecies_b2, roamerSpecies_e2 = string.find(msg, "received")
+        if roamerSpecies_b ~= null then
+            type   = string.sub(msg, roamerSpecies_b, roamerSpecies_e)
+            if type == "roamerspecies" then
+                number = tonumber(string.sub(msg, roamerSpecies_e + 1, roamerSpecies_b2 - 1))
+                Roamer_species = number
+                Roamer_percent = 1
+                console:log("Roamer Species Working: " .. roamerSpecies .. " Percent: " .. Roamer_percent)
+            end
+        end
+        --level
+        roamerLevel_b, roamerLevel_e   = string.find(msg, "roamerlevel")
+        roamerLevel_b2, roamerLevel_e2 = string.find(msg, "received")
+        if roamerLevel_b ~= null then
+            type   = string.sub(msg, roamerLevel_b, roamerLevel_e)
+            if type == "roamerlevel" then
+                number = tonumber(string.sub(msg, roamerLevel_e + 1, roamerLevel_b2 - 1))
+                Roamer_level = number
+                Roamer_percent = Roamer_percent + 1
+                console:log("Roamer Level Working: " .. Roamer_level .. " Percent: " .. Roamer_percent)
+            end
+        end
+        --number
+        roamerNumber_b,  roamerNumber_e  = string.find(msg, "roamernum")
+        roamerNumber_b2, roamerNumber_e2 = string.find(msg, "received")
+        if roamerNumber_b ~= null then
+            type   = string.sub(msg, roamerNumber_b, roamerNumber_e)
+            if type == "roamernum" then
+                number = tonumber(string.sub(msg, roamerNumber_e + 1, roamerNumber_b2 - 1))
+                Roamer_num = number
+                Roamer_percent = Roamer_percent + 1
+                console:log("Roamer Number Working: " .. Roamer_num .. " Percent: " .. Roamer_percent)
+            end
+        end
+        --badges
+        roamerBadges_b,  roamerBadges_e  = string.find(msg, "roamerbadges")
+        roamerBadges_b2, roamerBadges_e2 = string.find(msg, "received")
+        if roamerBadges_b ~= null then
+            type   = string.sub(msg, roamerBadges_b, roamerBadges_e)
+            if type == "roamerbadges" then
+                number = tonumber(string.sub(msg, roamerBadges_e + 1, roamerBadges_b2 - 1))
+                Roamer_badges = number
+                Roamer_percent = Roamer_percent + 1
+                console:log("Roamer Badges Working: " .. Roamer_badges .. " Percent: " .. Roamer_percent)
+            end
+        end
+
+        if(Roamer_percent == 4) then
+            createRoamer()
         end
 end
 
@@ -250,6 +315,19 @@ function createOubreak()
         emu:write16(adress_outbreak_probability, Outbreak_probability)
         emu:write16(adress_outbreak_move1,       Outbreak_move1)
         Outbreak_percent = 0
+    end
+end
+
+function createRoamer()
+    if not (Roamer_species == 0) then 
+        local species = speciesNames[Roamer_species]
+        console:log("A Roamer " .. species .. " was found!")
+        --console:log("An Outbreak of was found!")
+        emu:write16(adress_roamer_species,   Roamer_species)
+        emu:write16(adress_roamer_level,     Roamer_level)
+        emu:write16(adress_roamer_num,       Roamer_num)
+        emu:write16(adress_roamer_badges,    Roamer_badges)
+        Roamer_percent = 0
     end
 end
 
