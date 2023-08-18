@@ -39,9 +39,21 @@ local Roamer_percent = 0
 local adress_roamer_species = 0x0203feb0
 local adress_roamer_level   = 0x0203fea0
 local adress_roamer_num     = 0x0203fdf0
-local adress_roamer_badges  = 0x0203fde0
+local adress_roamer_badges  = 0x0203fd40
 --Debug stuff
-local enableDebug = false   
+local enableDebug = false
+local adress_test = 0x0203fec0
+--password stuff
+local PasswordValue_0 = 0
+local PasswordValue_1 = 0
+local PasswordValue_2 = 0
+local PasswordValue_3 = 0
+local PasswordValue_4 = 0
+local PasswordValue_5 = 0
+local PasswordValue_6 = 0
+local PasswordValue_7 = 0
+local PasswordValue_8 = 0
+local Password_percent = 0
 
 function globalFunction()
     --Cries
@@ -80,6 +92,28 @@ function detectCry()
         emu:write16(adress_currentcry, 0) -- Clear the Pokemon Cry value
 		wait(6000)
 	end
+end
+
+function givePasswordMonTest()
+	local mon_00 = 502961192
+	local mon_01 = 842646459
+	local mon_02 = 3722500540
+	local mon_03 = 3187663061
+	local mon_04 = 1023485185
+	local mon_05 = 3474628
+	local mon_06 = 16516860
+	local mon_07 = 72967168
+	local mon_08 = 290557728
+    emu:write32(0x0203fd40, mon_00)
+    emu:write32(0x0203fd44, mon_01)
+    emu:write32(0x0203fd48, mon_02)
+    emu:write32(0x0203fd4c, mon_03)
+    emu:write32(0x0203fd50, mon_04)
+    emu:write32(0x0203fd54, mon_05)
+    emu:write32(0x0203fd58, mon_06)
+    emu:write32(0x0203fd5c, mon_07)
+    emu:write32(0x0203fd60, mon_08)
+    console:log("A Password Mon was received!")
 end
 
 --local function read_file(path)
@@ -312,8 +346,152 @@ function socketMsgToFunction(msg)
         if(Roamer_percent == 4) then
             createRoamer()
         end
+    --Password
+        --PasswordValue_0
+        passwordValue0_b,  passwordValue0_e  = string.find(msg, "passwordvalue0")
+        passwordValue0_b2, passwordValue0_e2 = string.find(msg, "passwordvalue1")
+        if passwordValue0_b ~= null then
+            type   = string.sub(msg, passwordValue0_b, passwordValue0_e)
+            if type == "passwordvalue0" then
+                number = tonumber(string.sub(msg, passwordValue0_e + 1, passwordValue0_b2 - 1))
+                PasswordValue_0 = number
+                Password_percent = 1
+				if enableDebug == true then
+					console:log("Password Value 0 Working: " .. PasswordValue_0 .. " Percent: " .. Password_percent)
+				end
+            end
+        end
+        --PasswordValue_1
+        passwordValue1_b, passwordValue1_e   = string.find(msg, "passwordvalue1")
+        passwordValue1_b2, passwordValue1_e2 = string.find(msg, "passwordvalue2")
+        if passwordValue1_b ~= null then
+            type   = string.sub(msg, passwordValue1_b, passwordValue1_e)
+            if type == "passwordvalue1" then
+                number = tonumber(string.sub(msg, passwordValue1_e + 1, passwordValue1_b2 - 1))
+                PasswordValue_1 = number
+                Password_percent = Password_percent + 1
+				if enableDebug == true then
+					console:log("Password Value 1 Working: " .. PasswordValue_1 .. " Percent: " .. Password_percent)
+				end
+            end
+        end
+        --PasswordValue_2
+        passwordValue2_b,  passwordValue2_e  = string.find(msg, "passwordvalue2")
+        passwordValue2_b2, passwordValue2_e2 = string.find(msg, "passwordvalue3")
+        if passwordValue2_b ~= null then
+            type   = string.sub(msg, passwordValue2_b, passwordValue2_e)
+            if type == "passwordvalue2" then
+                number = tonumber(string.sub(msg, passwordValue2_e + 1, passwordValue2_b2 - 1))
+                PasswordValue_2 = number
+                Password_percent = Password_percent + 1
+				if enableDebug == true then
+					console:log("Password Value 2 Working: " .. PasswordValue_2 .. " Percent: " .. Password_percent)
+				end
+            end
+        end
+        --PasswordValue_3
+        passwordValue3_b,  passwordValue3_e  = string.find(msg, "passwordvalue3")
+        passwordValue3_b2, passwordValue3_e2 = string.find(msg, "passwordvalue4")
+        if passwordValue3_b ~= null then
+            type   = string.sub(msg, passwordValue3_b, passwordValue3_e)
+            if type == "passwordvalue3" then
+                number = tonumber(string.sub(msg, passwordValue3_e + 1, passwordValue3_b2 - 1))
+                PasswordValue_3 = number
+                Password_percent = Password_percent + 1
+				if enableDebug == true then
+					console:log("Password Value 3 Working: " .. PasswordValue_3 .. " Percent: " .. Password_percent)
+				end
+            end
+        end
+        --PasswordValue_4
+        passwordValue4_b,  passwordValue4_e  = string.find(msg, "passwordvalue4")
+        passwordValue4_b2, passwordValue4_e2 = string.find(msg, "passwordvalue5")
+        if passwordValue4_b ~= null then
+            type   = string.sub(msg, passwordValue4_b, passwordValue4_e)
+            if type == "passwordvalue4" then
+                number = tonumber(string.sub(msg, passwordValue4_e + 1, passwordValue4_b2 - 1))
+                PasswordValue_4 = number
+                Password_percent = Password_percent + 1
+				if enableDebug == true then
+					console:log("Password Value 4 Working: " .. PasswordValue_4 .. " Percent: " .. Password_percent)
+				end
+            end
+        end
+        --PasswordValue_5
+        passwordValue5_b,  passwordValue5_e  = string.find(msg, "passwordvalue5")
+        passwordValue5_b2, passwordValue5_e2 = string.find(msg, "passwordvalue6")
+        if passwordValue5_b ~= null then
+            type   = string.sub(msg, passwordValue5_b, passwordValue5_e)
+            if type == "passwordvalue5" then
+                number = tonumber(string.sub(msg, passwordValue5_e + 1, passwordValue5_b2 - 1))
+                PasswordValue_5 = number
+                Password_percent = Password_percent + 1
+				if enableDebug == true then
+					console:log("Password Value 5 Working: " .. PasswordValue_5 .. " Percent: " .. Password_percent)
+				end
+            end
+        end
+        --PasswordValue_6
+        passwordValue6_b,  passwordValue6_e  = string.find(msg, "passwordvalue6")
+        passwordValue6_b2, passwordValue6_e2 = string.find(msg, "passwordvalue7")
+        if passwordValue6_b ~= null then
+            type   = string.sub(msg, passwordValue6_b, passwordValue6_e)
+            if type == "passwordvalue6" then
+                number = tonumber(string.sub(msg, passwordValue6_e + 1, passwordValue6_b2 - 1))
+                PasswordValue_6 = number
+                Password_percent = Password_percent + 1
+				if enableDebug == true then
+					console:log("Password Value 6 Working: " .. PasswordValue_6 .. " Percent: " .. Password_percent)
+				end
+            end
+        end
+        --PasswordValue_7
+        passwordValue7_b,  passwordValue7_e  = string.find(msg, "passwordvalue7")
+        passwordValue7_b2, passwordValue7_e2 = string.find(msg, "passwordvalue8")
+        if passwordValue7_b ~= null then
+            type   = string.sub(msg, passwordValue7_b, passwordValue7_e)
+            if type == "passwordvalue7" then
+                number = tonumber(string.sub(msg, passwordValue7_e + 1, passwordValue7_b2 - 1))
+                PasswordValue_7 = number
+                Password_percent = Password_percent + 1
+				if enableDebug == true then
+					console:log("Password Value 7 Working: " .. PasswordValue_7 .. " Percent: " .. Password_percent)
+				end
+            end
+        end
+        --PasswordValue_8
+        passwordValue8_b,  passwordValue8_e  = string.find(msg, "passwordvalue8")
+        passwordValue8_b2, passwordValue8_e2 = string.find(msg, "receivedpassword")
+        if passwordValue8_b ~= null then
+            type   = string.sub(msg, passwordValue8_b, passwordValue8_e)
+            if type == "passwordvalue8" then
+                number = tonumber(string.sub(msg, passwordValue8_e + 1, passwordValue8_b2 - 1))
+                PasswordValue_8 = number
+                Password_percent = Password_percent + 1
+				if enableDebug == true then
+					console:log("Password Value 8 Working: " .. PasswordValue_8 .. " Percent: " .. Password_percent)
+				end
+            end
+        end
+
+        if(Password_percent == 9) then
+            givePasswordMon()
+        end
 end
 
+function givePasswordMon()
+    emu:write32(0x0203fd40, PasswordValue_0)
+    emu:write32(0x0203fd44, PasswordValue_1)
+    emu:write32(0x0203fd48, PasswordValue_2)
+    emu:write32(0x0203fd4c, PasswordValue_3)
+    emu:write32(0x0203fd50, PasswordValue_4)
+    emu:write32(0x0203fd54, PasswordValue_5)
+    emu:write32(0x0203fd58, PasswordValue_6)
+    emu:write32(0x0203fd5c, PasswordValue_7)
+    emu:write32(0x0203fd60, PasswordValue_8)
+    console:log("A Password Mon was received!")
+    Password_percent = 0
+end
 
 function setMysteryGift(value)
 	local MysteryGift = emu:read16(adress_mysterygift)
