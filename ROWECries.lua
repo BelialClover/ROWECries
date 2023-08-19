@@ -1,3 +1,7 @@
+--Debug stuff
+local enableDebug = false
+local adress_test = 0x0203fec0
+--
 local currentSpecies = 0
 local tempSpecies = 0
 --Setup here
@@ -40,9 +44,6 @@ local adress_roamer_species = 0x0203feb0
 local adress_roamer_level   = 0x0203fea0
 local adress_roamer_num     = 0x0203fdf0
 local adress_roamer_badges  = 0x0203fd40
---Debug stuff
-local enableDebug = false
-local adress_test = 0x0203fec0
 --password stuff
 local PasswordValue_0 = 0
 local PasswordValue_1 = 0
@@ -54,8 +55,47 @@ local PasswordValue_6 = 0
 local PasswordValue_7 = 0
 local PasswordValue_8 = 0
 local Password_percent = 0
+--Trainer_Password stuff
+local PasswordTrainerValue_1  = 0
+local PasswordTrainerValue_2  = 0
+local PasswordTrainerValue_3  = 0
+local PasswordTrainerValue_4  = 0
+local PasswordTrainerValue_5  = 0
+local PasswordTrainerValue_6  = 0
+local PasswordTrainerValue_7  = 0
+local PasswordTrainerValue_8  = 0
+local PasswordTrainerValue_9  = 0
+local PasswordTrainerValue_10 = 0
+local PasswordTrainerValue_11 = 0
+local PasswordTrainerValue_12 = 0
+local PasswordTrainerValue_13 = 0
+local PasswordTrainerValue_14 = 0
+local PasswordTrainerValue_15 = 0
+local PasswordTrainerValue_16 = 0
+local PasswordTrainerValue_17 = 0
+local PasswordTrainerValue_18 = 0
+local PasswordTrainerValue_19 = 0
+local PasswordTrainerValue_20 = 0
+local PasswordTrainerValue_21 = 0
+local PasswordTrainerValue_22 = 0
+local PasswordTrainerValue_23 = 0
+local PasswordTrainerValue_24 = 0
+local PasswordTrainerValue_25 = 0
+local PasswordTrainerValue_26 = 0
+local PasswordTrainerValue_27 = 0
+local PasswordTrainerValue_28 = 0
+local PasswordTrainerValue_29 = 0
+local PasswordTrainerValue_30 = 0
+local PasswordTrainerValue_31 = 0
+local PasswordTrainerValue_32 = 0
+local PasswordTrainerValue_33 = 0
+local PasswordTrainerValue_34 = 0
+local PasswordTrainerValue_35 = 0
+local PasswordTrainerValue_36 = 0
+local PasswordTrainer_percent = 0
 
 function globalFunction()
+    --givePasswordMonTest()
     --Cries
     --if detectCryMode() == 2 then
     --    enableAnimeCries = false
@@ -95,6 +135,103 @@ function detectCry()
 end
 
 function givePasswordMonTest()
+	local party_01 = emu:read32(0x0203fd80)
+	local party_02 = emu:read32(0x0203fd84)
+	local party_03 = emu:read32(0x0203fd88)
+	local party_04 = emu:read32(0x0203fd8c)
+    --
+	local party_05 = emu:read32(0x0203fd90)
+	local party_06 = emu:read32(0x0203fd94)
+	local party_07 = emu:read32(0x0203fd98)
+	local party_08 = emu:read32(0x0203fd9c)
+    --
+	local party_09 = emu:read32(0x0203fda0)
+	local party_10 = emu:read32(0x0203fda4)
+	local party_11 = emu:read32(0x0203fda8)
+	local party_12 = emu:read32(0x0203fdac)
+    --
+	local party_13 = emu:read32(0x0203fdb0)
+	local party_14 = emu:read32(0x0203fdb4)
+	local party_15 = emu:read32(0x0203fdb8)
+	local party_16 = emu:read32(0x0203fdbc)
+    --
+	local party_17 = emu:read32(0x0203fdc0)
+	local party_18 = emu:read32(0x0203fdc4)
+	local party_19 = emu:read32(0x0203fdc8)
+	local party_20 = emu:read32(0x0203fdcc)
+    --
+	local party_21 = emu:read32(0x0203fde0)
+	local party_22 = emu:read32(0x0203fde4)
+	local party_23 = emu:read32(0x0203fde8)
+	local party_24 = emu:read32(0x0203fdec)
+    --
+	local party_25 = emu:read32(0x0203fdf0)
+	local party_26 = emu:read32(0x0203fdf4)
+	local party_27 = emu:read32(0x0203fdf8)
+	local party_28 = emu:read32(0x0203fdfc)
+    --
+	local party_29 = emu:read32(0x0203fe00)
+	local party_30 = emu:read32(0x0203fe04)
+	local party_31 = emu:read32(0x0203fe08)
+	local party_32 = emu:read32(0x0203fe0c)
+    --
+	local party_33 = emu:read32(0x0203fe10)
+	local party_34 = emu:read32(0x0203fe14)
+	local party_35 = emu:read32(0x0203fe18)
+	local party_36 = emu:read32(0x0203fe1c)
+
+    if party_01 ~= 0 then
+        console:log("Your friend code is: " .. party_01 .. "-" .. party_02 .. "-" .. party_03 .. "-" .. party_04 .. "-" .. party_05 .. "-" .. party_06 .. "-" .. party_07 .. "-" .. party_08 .. "-" .. party_09 .. "-" .. party_10 .. "-" .. party_11 .. "-" .. party_12 .. "-" .. party_13 .. "-" .. party_14 .. "-" .. party_15 .. "-" .. party_16 .. "-" .. party_17 .. "-" .. party_18 .. "-" .. party_19 .. "-" .. party_20 .. "-" .. party_21 .. "-" .. party_22 .. "-" .. party_23 .. "-" .. party_24 .. "-" .. party_25 .. "-" .. party_26 .. "-" .. party_27 .. "-" .. party_28 .. "-" .. party_29 .. "-" .. party_30 .. "-" .. party_31 .. "-" .. party_32 .. "-" .. party_33 .. "-" .. party_34 .. "-" .. party_35 .. "-" .. party_36)
+    end
+
+    --Clear the data
+	emu:write32(0x0203fd80, 0)
+	emu:write32(0x0203fd84, 0)
+	emu:write32(0x0203fd88, 0)
+	emu:write32(0x0203fd8c, 0)
+    --
+	emu:write32(0x0203fd90, 0)
+	emu:write32(0x0203fd94, 0)
+	emu:write32(0x0203fd98, 0)
+	emu:write32(0x0203fd9c, 0)
+    --
+	emu:write32(0x0203fda0, 0)
+	emu:write32(0x0203fda4, 0)
+	emu:write32(0x0203fda8, 0)
+	emu:write32(0x0203fdac, 0)
+    --
+	emu:write32(0x0203fdb0, 0)
+	emu:write32(0x0203fdb4, 0)
+	emu:write32(0x0203fdb8, 0)
+	emu:write32(0x0203fdbc, 0)
+    --
+	emu:write32(0x0203fdc0, 0)
+	emu:write32(0x0203fdc4, 0)
+	emu:write32(0x0203fdc8, 0)
+	emu:write32(0x0203fdcc, 0)
+    --
+	emu:write32(0x0203fde0, 0)
+	emu:write32(0x0203fde4, 0)
+	emu:write32(0x0203fde8, 0)
+	emu:write32(0x0203fdec, 0)
+    --
+	emu:write32(0x0203fdf0, 0)
+	emu:write32(0x0203fdf4, 0)
+	emu:write32(0x0203fdf8, 0)
+	emu:write32(0x0203fdfc, 0)
+    --
+	emu:write32(0x0203fe00, 0)
+	emu:write32(0x0203fe04, 0)
+	emu:write32(0x0203fe08, 0)
+	emu:write32(0x0203fe0c, 0)
+    --
+	emu:write32(0x0203fe10, 0)
+	emu:write32(0x0203fe14, 0)
+	emu:write32(0x0203fe18, 0)
+	emu:write32(0x0203fe1c, 0)
+end
+
+function getTrainerFriendCode()
 	local mon_00 = 502961192
 	local mon_01 = 842646459
 	local mon_02 = 3722500540
@@ -152,9 +289,9 @@ function printWelcomeMessage(buffer)
 	buffer:clear()
     local filelocation = DATA_FOLDER .. "/abomasnow.mp3"
     if file_exists(filelocation) == true then
-        buffer:print(string.format("Welcome to R.O.W.E. Companion Version 1.1 everything seems to be set up correctly."))
+        buffer:print(string.format("Welcome to R.O.W.E. Companion Version 1.2 everything seems to be set up correctly."))
     else
-        buffer:print(string.format("Welcome to R.O.W.E. Companion Version 1.1 everything seems to be set up correctly."))
+        buffer:print(string.format("Welcome to R.O.W.E. Companion Version 1.2 everything seems to be set up correctly."))
 	    --buffer:print(string.format("Welcome to R.O.W.E. Companion Version 1.1, the Cry directory does not seem to be set up correctly."))
     end
 end
@@ -477,6 +614,565 @@ function socketMsgToFunction(msg)
         if(Password_percent == 9) then
             givePasswordMon()
         end
+
+        --PasswordTrainerValue_1
+        passwordTrainerValue1_b, passwordTrainerValue1_e   = string.find(msg, "psswdval1trainer")
+        passwordTrainerValue1_b2, passwordTrainerValue1_e2 = string.find(msg, "psswdval2trainer")
+        if passwordTrainerValue1_b ~= null then
+            type   = string.sub(msg, passwordTrainerValue1_b, passwordTrainerValue1_e)
+            if type == "psswdval1trainer" then
+                number = tonumber(string.sub(msg, passwordTrainerValue1_e + 1, passwordTrainerValue1_b2 - 1))
+                PasswordTrainerValue_1 = number
+                PasswordTrainer_percent = 1
+                if enableDebug == true then
+                    console:log("Password Trainer Value 1 Working: " .. PasswordTrainerValue_1 .. " Percent: " .. PasswordTrainer_percent)
+                end
+            end
+        end
+        --PasswordTrainerValue_2
+        passwordTrainerValue2_b,  passwordTrainerValue2_e  = string.find(msg, "psswdval2trainer")
+        passwordTrainerValue2_b2, passwordTrainerValue2_e2 = string.find(msg, "psswdval3trainer")
+        if passwordTrainerValue2_b ~= null then
+            type   = string.sub(msg, passwordTrainerValue2_b, passwordTrainerValue2_e)
+            if type == "psswdval2trainer" then
+                number = tonumber(string.sub(msg, passwordTrainerValue2_e + 1, passwordTrainerValue2_b2 - 1))
+                PasswordTrainerValue_2 = number
+                PasswordTrainer_percent = PasswordTrainer_percent + 1
+                if enableDebug == true then
+                    console:log("Password Trainer Value 2 Working: " .. PasswordTrainerValue_2 .. " Percent: " .. PasswordTrainer_percent)
+                end
+            end
+        end
+        --PasswordTrainerValue_3
+        passwordTrainerValue3_b,  passwordTrainerValue3_e  = string.find(msg, "psswdval3trainer")
+        passwordTrainerValue3_b2, passwordTrainerValue3_e2 = string.find(msg, "psswdval4trainer")
+        if passwordTrainerValue3_b ~= null then
+            type   = string.sub(msg, passwordTrainerValue3_b, passwordTrainerValue3_e)
+            if type == "psswdval3trainer" then
+                number = tonumber(string.sub(msg, passwordTrainerValue3_e + 1, passwordTrainerValue3_b2 - 1))
+                PasswordTrainerValue_3 = number
+                PasswordTrainer_percent = PasswordTrainer_percent + 1
+                if enableDebug == true then
+                    console:log("Password Trainer Value 3 Working: " .. PasswordTrainerValue_3 .. " Percent: " .. PasswordTrainer_percent)
+                end
+            end
+        end
+        --PasswordTrainerValue_4
+        passwordTrainerValue4_b,  passwordTrainerValue4_e  = string.find(msg, "psswdval4trainer")
+        passwordTrainerValue4_b2, passwordTrainerValue4_e2 = string.find(msg, "psswdval5trainer")
+        if passwordTrainerValue4_b ~= null then
+            type   = string.sub(msg, passwordTrainerValue4_b, passwordTrainerValue4_e)
+            if type == "psswdval4trainer" then
+                number = tonumber(string.sub(msg, passwordTrainerValue4_e + 1, passwordTrainerValue4_b2 - 1))
+                PasswordTrainerValue_4 = number
+                PasswordTrainer_percent = PasswordTrainer_percent + 1
+                if enableDebug == true then
+                    console:log("Password Trainer Value 4 Working: " .. PasswordTrainerValue_4 .. " Percent: " .. PasswordTrainer_percent)
+                end
+            end
+        end
+        --PasswordTrainerValue_5
+        passwordTrainerValue5_b,  passwordTrainerValue5_e  = string.find(msg, "psswdval5trainer")
+        passwordTrainerValue5_b2, passwordTrainerValue5_e2 = string.find(msg, "psswdval6trainer")
+        if passwordTrainerValue5_b ~= null then
+            type   = string.sub(msg, passwordTrainerValue5_b, passwordTrainerValue5_e)
+            if type == "psswdval5trainer" then
+                number = tonumber(string.sub(msg, passwordTrainerValue5_e + 1, passwordTrainerValue5_b2 - 1))
+                PasswordTrainerValue_5 = number
+                PasswordTrainer_percent = PasswordTrainer_percent + 1
+                if enableDebug == true then
+                    console:log("Password Trainer Value 5 Working: " .. PasswordTrainerValue_5 .. " Percent: " .. PasswordTrainer_percent)
+                end
+            end
+        end
+        --PasswordTrainerValue_6
+        passwordTrainerValue6_b,  passwordTrainerValue6_e  = string.find(msg, "psswdval6trainer")
+        passwordTrainerValue6_b2, passwordTrainerValue6_e2 = string.find(msg, "psswdval7trainer")
+        if passwordTrainerValue6_b ~= null then
+            type   = string.sub(msg, passwordTrainerValue6_b, passwordTrainerValue6_e)
+            if type == "psswdval6trainer" then
+                number = tonumber(string.sub(msg, passwordTrainerValue6_e + 1, passwordTrainerValue6_b2 - 1))
+                PasswordTrainerValue_6 = number
+                PasswordTrainer_percent = PasswordTrainer_percent + 1
+                if enableDebug == true then
+                    console:log("Password Trainer Value 6 Working: " .. PasswordTrainerValue_6 .. " Percent: " .. PasswordTrainer_percent)
+                end
+            end
+        end
+        --PasswordTrainerValue_7
+        passwordTrainerValue7_b,  passwordTrainerValue7_e  = string.find(msg, "psswdval7trainer")
+        passwordTrainerValue7_b2, passwordTrainerValue7_e2 = string.find(msg, "psswdval8trainer")
+        if passwordTrainerValue7_b ~= null then
+            type   = string.sub(msg, passwordTrainerValue7_b, passwordTrainerValue7_e)
+            if type == "psswdval7trainer" then
+                number = tonumber(string.sub(msg, passwordTrainerValue7_e + 1, passwordTrainerValue7_b2 - 1))
+                PasswordTrainerValue_7 = number
+                PasswordTrainer_percent = PasswordTrainer_percent + 1
+                if enableDebug == true then
+                    console:log("Password Trainer Value 7 Working: " .. PasswordTrainerValue_7 .. " Percent: " .. PasswordTrainer_percent)
+                end
+            end
+        end
+        --PasswordTrainerValue_8
+        passwordTrainerValue8_b,  passwordTrainerValue8_e  = string.find(msg, "psswdval8trainer")
+        passwordTrainerValue8_b2, passwordTrainerValue8_e2 = string.find(msg, "psswdval9trainer")
+        if passwordTrainerValue8_b ~= null then
+            type   = string.sub(msg, passwordTrainerValue8_b, passwordTrainerValue8_e)
+            if type == "psswdval8trainer" then
+                number = tonumber(string.sub(msg, passwordTrainerValue8_e + 1, passwordTrainerValue8_b2 - 1))
+                PasswordTrainerValue_8 = number
+                PasswordTrainer_percent = PasswordTrainer_percent + 1
+                if enableDebug == true then
+                    console:log("Password Trainer Value 8 Working: " .. PasswordTrainerValue_8 .. " Percent: " .. PasswordTrainer_percent)
+                end
+            end
+        end
+        --PasswordTrainerValue_9
+        passwordTrainerValue9_b,  passwordTrainerValue9_e  = string.find(msg, "psswdval9trainer")
+        passwordTrainerValue9_b2, passwordTrainerValue9_e2 = string.find(msg, "psswdval10trainer")
+        if passwordTrainerValue9_b ~= null then
+            type   = string.sub(msg, passwordTrainerValue9_b, passwordTrainerValue9_e)
+            if type == "psswdval9trainer" then
+                number = tonumber(string.sub(msg, passwordTrainerValue9_e + 1, passwordTrainerValue9_b2 - 1))
+                PasswordTrainerValue_9 = number
+                PasswordTrainer_percent = PasswordTrainer_percent + 1
+                if enableDebug == true then
+                    console:log("Password Trainer Value 9 Working: " .. PasswordTrainerValue_9 .. " Percent: " .. PasswordTrainer_percent)
+                end
+            end
+        end
+        --PasswordTrainerValue_10
+        passwordTrainerValue10_b,  passwordTrainerValue10_e  = string.find(msg, "psswdval10trainer")
+        passwordTrainerValue10_b2, passwordTrainerValue10_e2 = string.find(msg, "psswdval11trainer")
+        if passwordTrainerValue10_b ~= null then
+            type   = string.sub(msg, passwordTrainerValue10_b, passwordTrainerValue10_e)
+            if type == "psswdval10trainer" then
+                number = tonumber(string.sub(msg, passwordTrainerValue10_e + 1, passwordTrainerValue10_b2 - 1))
+                PasswordTrainerValue_10 = number
+                PasswordTrainer_percent = PasswordTrainer_percent + 1
+                if enableDebug == true then
+                    console:log("Password Trainer Value 10 Working: " .. PasswordTrainerValue_10 .. " Percent: " .. PasswordTrainer_percent)
+                end
+            end
+        end
+        --PasswordTrainerValue_11
+        passwordTrainerValue11_b,  passwordTrainerValue11_e  = string.find(msg, "psswdval11trainer")
+        passwordTrainerValue11_b2, passwordTrainerValue11_e2 = string.find(msg, "psswdval12trainer")
+        if passwordTrainerValue11_b ~= null then
+            type   = string.sub(msg, passwordTrainerValue11_b, passwordTrainerValue11_e)
+            if type == "psswdval11trainer" then
+                number = tonumber(string.sub(msg, passwordTrainerValue11_e + 1, passwordTrainerValue11_b2 - 1))
+                PasswordTrainerValue_11 = number
+                PasswordTrainer_percent = PasswordTrainer_percent + 1
+                if enableDebug == true then
+                    console:log("Password Trainer Value 11 Working: " .. PasswordTrainerValue_11 .. " Percent: " .. PasswordTrainer_percent)
+                end
+            end
+        end
+        --PasswordTrainerValue_12
+        passwordTrainerValue12_b,  passwordTrainerValue12_e  = string.find(msg, "psswdval12trainer")
+        passwordTrainerValue12_b2, passwordTrainerValue12_e2 = string.find(msg, "psswdval13trainer")
+        if passwordTrainerValue12_b ~= null then
+            type   = string.sub(msg, passwordTrainerValue12_b, passwordTrainerValue12_e)
+            if type == "psswdval12trainer" then
+                number = tonumber(string.sub(msg, passwordTrainerValue12_e + 1, passwordTrainerValue12_b2 - 1))
+                PasswordTrainerValue_12 = number
+                PasswordTrainer_percent = PasswordTrainer_percent + 1
+                if enableDebug == true then
+                    console:log("Password Trainer Value 12 Working: " .. PasswordTrainerValue_12 .. " Percent: " .. PasswordTrainer_percent)
+                end
+            end
+        end
+        --PasswordTrainerValue_13
+        passwordTrainerValue13_b,  passwordTrainerValue13_e  = string.find(msg, "psswdval13trainer")
+        passwordTrainerValue13_b2, passwordTrainerValue13_e2 = string.find(msg, "psswdval14trainer")
+        if passwordTrainerValue13_b ~= null then
+            type   = string.sub(msg, passwordTrainerValue13_b, passwordTrainerValue13_e)
+            if type == "psswdval13trainer" then
+                number = tonumber(string.sub(msg, passwordTrainerValue13_e + 1, passwordTrainerValue13_b2 - 1))
+                PasswordTrainerValue_13 = number
+                PasswordTrainer_percent = PasswordTrainer_percent + 1
+                if enableDebug == true then
+                    console:log("Password Trainer Value 13 Working: " .. PasswordTrainerValue_13 .. " Percent: " .. PasswordTrainer_percent)
+                end
+            end
+        end
+        --PasswordTrainerValue_14
+        passwordTrainerValue14_b,  passwordTrainerValue14_e  = string.find(msg, "psswdval14trainer")
+        passwordTrainerValue14_b2, passwordTrainerValue14_e2 = string.find(msg, "psswdval15trainer")
+        if passwordTrainerValue14_b ~= null then
+            type   = string.sub(msg, passwordTrainerValue14_b, passwordTrainerValue14_e)
+            if type == "psswdval14trainer" then
+                number = tonumber(string.sub(msg, passwordTrainerValue14_e + 1, passwordTrainerValue14_b2 - 1))
+                PasswordTrainerValue_14 = number
+                PasswordTrainer_percent = PasswordTrainer_percent + 1
+                if enableDebug == true then
+                    console:log("Password Trainer Value 14 Working: " .. PasswordTrainerValue_14 .. " Percent: " .. PasswordTrainer_percent)
+                end
+            end
+        end
+        --PasswordTrainerValue_15
+        passwordTrainerValue15_b,  passwordTrainerValue15_e  = string.find(msg, "psswdval15trainer")
+        passwordTrainerValue15_b2, passwordTrainerValue15_e2 = string.find(msg, "psswdval16trainer")
+        if passwordTrainerValue15_b ~= null then
+            type   = string.sub(msg, passwordTrainerValue15_b, passwordTrainerValue15_e)
+            if type == "psswdval15trainer" then
+                number = tonumber(string.sub(msg, passwordTrainerValue15_e + 1, passwordTrainerValue15_b2 - 1))
+                PasswordTrainerValue_15 = number
+                PasswordTrainer_percent = PasswordTrainer_percent + 1
+                if enableDebug == true then
+                    console:log("Password Trainer Value 15 Working: " .. PasswordTrainerValue_15 .. " Percent: " .. PasswordTrainer_percent)
+                end
+            end
+        end
+        --PasswordTrainerValue_16
+        passwordTrainerValue16_b,  passwordTrainerValue16_e  = string.find(msg, "psswdval16trainer")
+        passwordTrainerValue16_b2, passwordTrainerValue16_e2 = string.find(msg, "psswdval17trainer")
+        if passwordTrainerValue16_b ~= null then
+            type   = string.sub(msg, passwordTrainerValue16_b, passwordTrainerValue16_e)
+            if type == "psswdval16trainer" then
+                number = tonumber(string.sub(msg, passwordTrainerValue16_e + 1, passwordTrainerValue16_b2 - 1))
+                PasswordTrainerValue_16 = number
+                PasswordTrainer_percent = PasswordTrainer_percent + 1
+                if enableDebug == true then
+                    console:log("Password Trainer Value 16 Working: " .. PasswordTrainerValue_16 .. " Percent: " .. PasswordTrainer_percent)
+                end
+            end
+        end
+        --PasswordTrainerValue_17
+        passwordTrainerValue17_b,  passwordTrainerValue17_e  = string.find(msg, "psswdval17trainer")
+        passwordTrainerValue17_b2, passwordTrainerValue17_e2 = string.find(msg, "psswdval18trainer")
+        if passwordTrainerValue17_b ~= null then
+            type   = string.sub(msg, passwordTrainerValue17_b, passwordTrainerValue17_e)
+            if type == "psswdval17trainer" then
+                number = tonumber(string.sub(msg, passwordTrainerValue17_e + 1, passwordTrainerValue17_b2 - 1))
+                PasswordTrainerValue_17 = number
+                PasswordTrainer_percent = PasswordTrainer_percent + 1
+                if enableDebug == true then
+                    console:log("Password Trainer Value 17 Working: " .. PasswordTrainerValue_17 .. " Percent: " .. PasswordTrainer_percent)
+                end
+            end
+        end
+        --PasswordTrainerValue_18
+        passwordTrainerValue18_b,  passwordTrainerValue18_e  = string.find(msg, "psswdval18trainer")
+        passwordTrainerValue18_b2, passwordTrainerValue18_e2 = string.find(msg, "psswdval19trainer")
+        if passwordTrainerValue18_b ~= null then
+            type   = string.sub(msg, passwordTrainerValue18_b, passwordTrainerValue18_e)
+            if type == "psswdval18trainer" then
+                number = tonumber(string.sub(msg, passwordTrainerValue18_e + 1, passwordTrainerValue18_b2 - 1))
+                PasswordTrainerValue_18 = number
+                PasswordTrainer_percent = PasswordTrainer_percent + 1
+                if enableDebug == true then
+                    console:log("Password Trainer Value 18 Working: " .. PasswordTrainerValue_18 .. " Percent: " .. PasswordTrainer_percent)
+                end
+            end
+        end
+        --PasswordTrainerValue_19
+        passwordTrainerValue19_b,  passwordTrainerValue19_e  = string.find(msg, "psswdval19trainer")
+        passwordTrainerValue19_b2, passwordTrainerValue19_e2 = string.find(msg, "psswdval20trainer")
+        if passwordTrainerValue19_b ~= null then
+            type   = string.sub(msg, passwordTrainerValue19_b, passwordTrainerValue19_e)
+            if type == "psswdval19trainer" then
+                number = tonumber(string.sub(msg, passwordTrainerValue19_e + 1, passwordTrainerValue19_b2 - 1))
+                PasswordTrainerValue_19 = number
+                PasswordTrainer_percent = PasswordTrainer_percent + 1
+                if enableDebug == true then
+                    console:log("Password Trainer Value 19 Working: " .. PasswordTrainerValue_19 .. " Percent: " .. PasswordTrainer_percent)
+                end
+            end
+        end
+        --PasswordTrainerValue_20
+        passwordTrainerValue20_b,  passwordTrainerValue20_e  = string.find(msg, "psswdval20trainer")
+        passwordTrainerValue20_b2, passwordTrainerValue20_e2 = string.find(msg, "psswdval21trainer")
+        if passwordTrainerValue20_b ~= null then
+            type   = string.sub(msg, passwordTrainerValue20_b, passwordTrainerValue20_e)
+            if type == "psswdval20trainer" then
+                number = tonumber(string.sub(msg, passwordTrainerValue20_e + 1, passwordTrainerValue20_b2 - 1))
+                PasswordTrainerValue_20 = number
+                PasswordTrainer_percent = PasswordTrainer_percent + 1
+                if enableDebug == true then
+                    console:log("Password Trainer Value 20 Working: " .. PasswordTrainerValue_20 .. " Percent: " .. PasswordTrainer_percent)
+                end
+            end
+        end
+        --PasswordTrainerValue_21
+        passwordTrainerValue21_b,  passwordTrainerValue21_e  = string.find(msg, "psswdval21trainer")
+        passwordTrainerValue21_b2, passwordTrainerValue21_e2 = string.find(msg, "psswdval22trainer")
+        if passwordTrainerValue21_b ~= null then
+            type   = string.sub(msg, passwordTrainerValue21_b, passwordTrainerValue21_e)
+            if type == "psswdval21trainer" then
+                number = tonumber(string.sub(msg, passwordTrainerValue21_e + 1, passwordTrainerValue21_b2 - 1))
+                PasswordTrainerValue_21 = number
+                PasswordTrainer_percent = PasswordTrainer_percent + 1
+                if enableDebug == true then
+                    console:log("Password Trainer Value 21 Working: " .. PasswordTrainerValue_21 .. " Percent: " .. PasswordTrainer_percent)
+                end
+            end
+        end
+        --PasswordTrainerValue_22
+        passwordTrainerValue22_b,  passwordTrainerValue22_e  = string.find(msg, "psswdval22trainer")
+        passwordTrainerValue22_b2, passwordTrainerValue22_e2 = string.find(msg, "psswdval23trainer")
+        if passwordTrainerValue22_b ~= null then
+            type   = string.sub(msg, passwordTrainerValue22_b, passwordTrainerValue22_e)
+            if type == "psswdval22trainer" then
+                number = tonumber(string.sub(msg, passwordTrainerValue22_e + 1, passwordTrainerValue22_b2 - 1))
+                PasswordTrainerValue_22 = number
+                PasswordTrainer_percent = PasswordTrainer_percent + 1
+                if enableDebug == true then
+                    console:log("Password Trainer Value 22 Working: " .. PasswordTrainerValue_22 .. " Percent: " .. PasswordTrainer_percent)
+                end
+            end
+        end
+        --PasswordTrainerValue_23
+        passwordTrainerValue23_b,  passwordTrainerValue23_e  = string.find(msg, "psswdval23trainer")
+        passwordTrainerValue23_b2, passwordTrainerValue23_e2 = string.find(msg, "psswdval24trainer")
+        if passwordTrainerValue23_b ~= null then
+            type   = string.sub(msg, passwordTrainerValue23_b, passwordTrainerValue23_e)
+            if type == "psswdval23trainer" then
+                number = tonumber(string.sub(msg, passwordTrainerValue23_e + 1, passwordTrainerValue23_b2 - 1))
+                PasswordTrainerValue_23 = number
+                PasswordTrainer_percent = PasswordTrainer_percent + 1
+                if enableDebug == true then
+                    console:log("Password Trainer Value 23 Working: " .. PasswordTrainerValue_23 .. " Percent: " .. PasswordTrainer_percent)
+                end
+            end
+        end
+        --PasswordTrainerValue_24
+        passwordTrainerValue24_b,  passwordTrainerValue24_e  = string.find(msg, "psswdval24trainer")
+        passwordTrainerValue24_b2, passwordTrainerValue24_e2 = string.find(msg, "psswdval25trainer")
+        if passwordTrainerValue24_b ~= null then
+            type   = string.sub(msg, passwordTrainerValue24_b, passwordTrainerValue24_e)
+            if type == "psswdval24trainer" then
+                number = tonumber(string.sub(msg, passwordTrainerValue24_e + 1, passwordTrainerValue24_b2 - 1))
+                PasswordTrainerValue_24 = number
+                PasswordTrainer_percent = PasswordTrainer_percent + 1
+                if enableDebug == true then
+                    console:log("Password Trainer Value 24 Working: " .. PasswordTrainerValue_24 .. " Percent: " .. PasswordTrainer_percent)
+                end
+            end
+        end
+        --PasswordTrainerValue_25
+        passwordTrainerValue25_b,  passwordTrainerValue25_e  = string.find(msg, "psswdval25trainer")
+        passwordTrainerValue25_b2, passwordTrainerValue25_e2 = string.find(msg, "psswdval26trainer")
+        if passwordTrainerValue25_b ~= null then
+            type   = string.sub(msg, passwordTrainerValue25_b, passwordTrainerValue25_e)
+            if type == "psswdval25trainer" then
+                number = tonumber(string.sub(msg, passwordTrainerValue25_e + 1, passwordTrainerValue25_b2 - 1))
+                PasswordTrainerValue_25 = number
+                PasswordTrainer_percent = PasswordTrainer_percent + 1
+                if enableDebug == true then
+                    console:log("Password Trainer Value 25 Working: " .. PasswordTrainerValue_25 .. " Percent: " .. PasswordTrainer_percent)
+                end
+            end
+        end
+        --PasswordTrainerValue_26
+        passwordTrainerValue26_b,  passwordTrainerValue26_e  = string.find(msg, "psswdval26trainer")
+        passwordTrainerValue26_b2, passwordTrainerValue26_e2 = string.find(msg, "psswdval27trainer")
+        if passwordTrainerValue26_b ~= null then
+            type   = string.sub(msg, passwordTrainerValue26_b, passwordTrainerValue26_e)
+            if type == "psswdval26trainer" then
+                number = tonumber(string.sub(msg, passwordTrainerValue26_e + 1, passwordTrainerValue26_b2 - 1))
+                PasswordTrainerValue_26 = number
+                PasswordTrainer_percent = PasswordTrainer_percent + 1
+                if enableDebug == true then
+                    console:log("Password Trainer Value 26 Working: " .. PasswordTrainerValue_26 .. " Percent: " .. PasswordTrainer_percent)
+                end
+            end
+        end
+        --PasswordTrainerValue_27
+        passwordTrainerValue27_b,  passwordTrainerValue27_e  = string.find(msg, "psswdval27trainer")
+        passwordTrainerValue27_b2, passwordTrainerValue27_e2 = string.find(msg, "psswdval28trainer")
+        if passwordTrainerValue27_b ~= null then
+            type   = string.sub(msg, passwordTrainerValue27_b, passwordTrainerValue27_e)
+            if type == "psswdval27trainer" then
+                number = tonumber(string.sub(msg, passwordTrainerValue27_e + 1, passwordTrainerValue27_b2 - 1))
+                PasswordTrainerValue_27 = number
+                PasswordTrainer_percent = PasswordTrainer_percent + 1
+                if enableDebug == true then
+                    console:log("Password Trainer Value 27 Working: " .. PasswordTrainerValue_27 .. " Percent: " .. PasswordTrainer_percent)
+                end
+            end
+        end
+        --PasswordTrainerValue_28
+        passwordTrainerValue28_b,  passwordTrainerValue28_e  = string.find(msg, "psswdval28trainer")
+        passwordTrainerValue28_b2, passwordTrainerValue28_e2 = string.find(msg, "psswdval29trainer")
+        if passwordTrainerValue28_b ~= null then
+            type   = string.sub(msg, passwordTrainerValue28_b, passwordTrainerValue28_e)
+            if type == "psswdval28trainer" then
+                number = tonumber(string.sub(msg, passwordTrainerValue28_e + 1, passwordTrainerValue28_b2 - 1))
+                PasswordTrainerValue_28 = number
+                PasswordTrainer_percent = PasswordTrainer_percent + 1
+                if enableDebug == true then
+                    console:log("Password Trainer Value 28 Working: " .. PasswordTrainerValue_28 .. " Percent: " .. PasswordTrainer_percent)
+                end
+            end
+        end
+        --PasswordTrainerValue_29
+        passwordTrainerValue29_b,  passwordTrainerValue29_e  = string.find(msg, "psswdval29trainer")
+        passwordTrainerValue29_b2, passwordTrainerValue29_e2 = string.find(msg, "psswdval30trainer")
+        if passwordTrainerValue29_b ~= null then
+            type   = string.sub(msg, passwordTrainerValue29_b, passwordTrainerValue29_e)
+            if type == "psswdval29trainer" then
+                number = tonumber(string.sub(msg, passwordTrainerValue29_e + 1, passwordTrainerValue29_b2 - 1))
+                PasswordTrainerValue_29 = number
+                PasswordTrainer_percent = PasswordTrainer_percent + 1
+                if enableDebug == true then
+                    console:log("Password Trainer Value 29 Working: " .. PasswordTrainerValue_29 .. " Percent: " .. PasswordTrainer_percent)
+                end
+            end
+        end
+        --PasswordTrainerValue_30
+        passwordTrainerValue30_b,  passwordTrainerValue30_e  = string.find(msg, "psswdval30trainer")
+        passwordTrainerValue30_b2, passwordTrainerValue30_e2 = string.find(msg, "psswdval31trainer")
+        if passwordTrainerValue30_b ~= null then
+            type   = string.sub(msg, passwordTrainerValue30_b, passwordTrainerValue30_e)
+            if type == "psswdval30trainer" then
+                number = tonumber(string.sub(msg, passwordTrainerValue30_e + 1, passwordTrainerValue30_b2 - 1))
+                PasswordTrainerValue_30 = number
+                PasswordTrainer_percent = PasswordTrainer_percent + 1
+                if enableDebug == true then
+                    console:log("Password Trainer Value 30 Working: " .. PasswordTrainerValue_30 .. " Percent: " .. PasswordTrainer_percent)
+                end
+            end
+        end
+        --PasswordTrainerValue_31
+        passwordTrainerValue31_b,  passwordTrainerValue31_e  = string.find(msg, "psswdval31trainer")
+        passwordTrainerValue31_b2, passwordTrainerValue31_e2 = string.find(msg, "psswdval32trainer")
+        if passwordTrainerValue31_b ~= null then
+            type   = string.sub(msg, passwordTrainerValue31_b, passwordTrainerValue31_e)
+            if type == "psswdval31trainer" then
+                number = tonumber(string.sub(msg, passwordTrainerValue31_e + 1, passwordTrainerValue31_b2 - 1))
+                PasswordTrainerValue_31 = number
+                PasswordTrainer_percent = PasswordTrainer_percent + 1
+                if enableDebug == true then
+                    console:log("Password Trainer Value 31 Working: " .. PasswordTrainerValue_31 .. " Percent: " .. PasswordTrainer_percent)
+                end
+            end
+        end
+        --PasswordTrainerValue_32
+        passwordTrainerValue32_b,  passwordTrainerValue32_e  = string.find(msg, "psswdval32trainer")
+        passwordTrainerValue32_b2, passwordTrainerValue32_e2 = string.find(msg, "psswdval33trainer")
+        if passwordTrainerValue32_b ~= null then
+            type   = string.sub(msg, passwordTrainerValue32_b, passwordTrainerValue32_e)
+            if type == "psswdval32trainer" then
+                number = tonumber(string.sub(msg, passwordTrainerValue32_e + 1, passwordTrainerValue32_b2 - 1))
+                PasswordTrainerValue_32 = number
+                PasswordTrainer_percent = PasswordTrainer_percent + 1
+                if enableDebug == true then
+                    console:log("Password Trainer Value 32 Working: " .. PasswordTrainerValue_32 .. " Percent: " .. PasswordTrainer_percent)
+                end
+            end
+        end
+        --PasswordTrainerValue_33
+        passwordTrainerValue33_b,  passwordTrainerValue33_e  = string.find(msg, "psswdval33trainer")
+        passwordTrainerValue33_b2, passwordTrainerValue33_e2 = string.find(msg, "psswdval34trainer")
+        if passwordTrainerValue33_b ~= null then
+            type   = string.sub(msg, passwordTrainerValue33_b, passwordTrainerValue33_e)
+            if type == "psswdval33trainer" then
+                number = tonumber(string.sub(msg, passwordTrainerValue33_e + 1, passwordTrainerValue33_b2 - 1))
+                PasswordTrainerValue_33 = number
+                PasswordTrainer_percent = PasswordTrainer_percent + 1
+                if enableDebug == true then
+                    console:log("Password Trainer Value 33 Working: " .. PasswordTrainerValue_33 .. " Percent: " .. PasswordTrainer_percent)
+                end
+            end
+        end
+        --PasswordTrainerValue_34
+        passwordTrainerValue34_b,  passwordTrainerValue34_e  = string.find(msg, "psswdval34trainer")
+        passwordTrainerValue34_b2, passwordTrainerValue34_e2 = string.find(msg, "psswdval35trainer")
+        if passwordTrainerValue34_b ~= null then
+            type   = string.sub(msg, passwordTrainerValue34_b, passwordTrainerValue34_e)
+            if type == "psswdval34trainer" then
+                number = tonumber(string.sub(msg, passwordTrainerValue34_e + 1, passwordTrainerValue34_b2 - 1))
+                PasswordTrainerValue_34 = number
+                PasswordTrainer_percent = PasswordTrainer_percent + 1
+                if enableDebug == true then
+                    console:log("Password Trainer Value 34 Working: " .. PasswordTrainerValue_34 .. " Percent: " .. PasswordTrainer_percent)
+                end
+            end
+        end
+        --PasswordTrainerValue_35
+        passwordTrainerValue35_b,  passwordTrainerValue35_e  = string.find(msg, "psswdval35trainer")
+        passwordTrainerValue35_b2, passwordTrainerValue35_e2 = string.find(msg, "psswdval36trainer")
+        if passwordTrainerValue35_b ~= null then
+            type   = string.sub(msg, passwordTrainerValue35_b, passwordTrainerValue35_e)
+            if type == "psswdval35trainer" then
+                number = tonumber(string.sub(msg, passwordTrainerValue35_e + 1, passwordTrainerValue35_b2 - 1))
+                PasswordTrainerValue_35 = number
+                PasswordTrainer_percent = PasswordTrainer_percent + 1
+                if enableDebug == true then
+                    console:log("Password Trainer Value 35 Working: " .. PasswordTrainerValue_35 .. " Percent: " .. PasswordTrainer_percent)
+                end
+            end
+        end
+        --PasswordTrainerValue_36
+        passwordTrainerValue36_b,  passwordTrainerValue36_e  = string.find(msg, "psswdval36trainer")
+        passwordTrainerValue36_b2, passwordTrainerValue36_e2 = string.find(msg, "receivedtrainerpassword")
+        if passwordTrainerValue36_b ~= null then
+            type   = string.sub(msg, passwordTrainerValue36_b, passwordTrainerValue36_e)
+            if type == "psswdval36trainer" then
+                number = tonumber(string.sub(msg, passwordTrainerValue36_e + 1, passwordTrainerValue36_b2 - 1))
+                PasswordTrainerValue_36 = number
+                PasswordTrainer_percent = PasswordTrainer_percent + 1
+                if enableDebug == true then
+                    console:log("Password Trainer Value 36 Working: " .. PasswordTrainerValue_36 .. " Percent: " .. PasswordTrainer_percent)
+                end
+            end
+        end
+        
+
+        if(PasswordTrainer_percent == 36) then
+            GetPasswordTrainer()
+        end
+end
+
+function GetPasswordTrainer()
+    emu:write32(0x0203fd80, PasswordTrainerValue_1)
+	emu:write32(0x0203fd84, PasswordTrainerValue_2)
+	emu:write32(0x0203fd88, PasswordTrainerValue_3)
+	emu:write32(0x0203fd8c, PasswordTrainerValue_4)
+    --
+	emu:write32(0x0203fd90, PasswordTrainerValue_5)
+	emu:write32(0x0203fd94, PasswordTrainerValue_6)
+	emu:write32(0x0203fd98, PasswordTrainerValue_7)
+	emu:write32(0x0203fd9c, PasswordTrainerValue_8)
+    --
+	emu:write32(0x0203fda0, PasswordTrainerValue_9)
+	emu:write32(0x0203fda4, PasswordTrainerValue_10)
+	emu:write32(0x0203fda8, PasswordTrainerValue_11)
+	emu:write32(0x0203fdac, PasswordTrainerValue_12)
+    --
+	emu:write32(0x0203fdb0, PasswordTrainerValue_13)
+	emu:write32(0x0203fdb4, PasswordTrainerValue_14)
+	emu:write32(0x0203fdb8, PasswordTrainerValue_15)
+	emu:write32(0x0203fdbc, PasswordTrainerValue_16)
+    --
+	emu:write32(0x0203fdc0, PasswordTrainerValue_17)
+	emu:write32(0x0203fdc4, PasswordTrainerValue_18)
+	emu:write32(0x0203fdc8, PasswordTrainerValue_19)
+	emu:write32(0x0203fdcc, PasswordTrainerValue_20)
+    --
+	emu:write32(0x0203fde0, PasswordTrainerValue_21)
+	emu:write32(0x0203fde4, PasswordTrainerValue_22)
+	emu:write32(0x0203fde8, PasswordTrainerValue_23)
+	emu:write32(0x0203fdec, PasswordTrainerValue_24)
+    --
+	emu:write32(0x0203fdf0, PasswordTrainerValue_25)
+	emu:write32(0x0203fdf4, PasswordTrainerValue_26)
+	emu:write32(0x0203fdf8, PasswordTrainerValue_27)
+	emu:write32(0x0203fdfc, PasswordTrainerValue_28)
+    --
+	emu:write32(0x0203fe00, PasswordTrainerValue_29)
+	emu:write32(0x0203fe04, PasswordTrainerValue_30)
+	emu:write32(0x0203fe08, PasswordTrainerValue_31)
+	emu:write32(0x0203fe0c, PasswordTrainerValue_32)
+    --
+	emu:write32(0x0203fe10, PasswordTrainerValue_33)
+	emu:write32(0x0203fe14, PasswordTrainerValue_34)
+	emu:write32(0x0203fe18, PasswordTrainerValue_35)
+	emu:write32(0x0203fe1c, PasswordTrainerValue_36)
+    console:log("A Password Trainer was received!")
+    PasswordTrainer_percent = 0
 end
 
 function givePasswordMon()
@@ -566,7 +1262,9 @@ function ST_received(id)
 	while true do
 		local p, err = sock:receive(1024)
 		if p then
-			--console:log(ST_format(id, p:match("^(.-)%s*$")))
+            if enableDebug == true then
+                console:log(ST_format(id, p:match("^(.-)%s*$")))
+            end
             socketMsgToFunction(p:match("^(.-)%s*$"))
 		else
 			if err ~= socket.ERRORS.AGAIN then
