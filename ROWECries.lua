@@ -92,10 +92,17 @@ local PasswordTrainerValue_33 = 0
 local PasswordTrainerValue_34 = 0
 local PasswordTrainerValue_35 = 0
 local PasswordTrainerValue_36 = 0
+local PasswordTrainerValue_37 = 0
+local PasswordTrainerValue_38 = 0
+local PasswordTrainerValue_39 = 0
 local PasswordTrainer_percent = 0
+--Socket
+local socketID = 255 -- Test
+local web_connected = 0 -- 0 = false, 1 = true
 
 function globalFunction()
-    --givePasswordMonTest()
+    checkTrainerPassword()
+    ST_start();
     --Cries
     --if detectCryMode() == 2 then
     --    enableAnimeCries = false
@@ -134,57 +141,30 @@ function detectCry()
 	end
 end
 
-function givePasswordMonTest()
-	local party_01 = emu:read32(0x0203fd80)
-	local party_02 = emu:read32(0x0203fd84)
-	local party_03 = emu:read32(0x0203fd88)
-	local party_04 = emu:read32(0x0203fd8c)
-    --
-	local party_05 = emu:read32(0x0203fd90)
-	local party_06 = emu:read32(0x0203fd94)
-	local party_07 = emu:read32(0x0203fd98)
-	local party_08 = emu:read32(0x0203fd9c)
-    --
-	local party_09 = emu:read32(0x0203fda0)
-	local party_10 = emu:read32(0x0203fda4)
-	local party_11 = emu:read32(0x0203fda8)
-	local party_12 = emu:read32(0x0203fdac)
-    --
-	local party_13 = emu:read32(0x0203fdb0)
-	local party_14 = emu:read32(0x0203fdb4)
-	local party_15 = emu:read32(0x0203fdb8)
-	local party_16 = emu:read32(0x0203fdbc)
-    --
-	local party_17 = emu:read32(0x0203fdc0)
-	local party_18 = emu:read32(0x0203fdc4)
-	local party_19 = emu:read32(0x0203fdc8)
-	local party_20 = emu:read32(0x0203fdcc)
-    --
-	local party_21 = emu:read32(0x0203fde0)
-	local party_22 = emu:read32(0x0203fde4)
-	local party_23 = emu:read32(0x0203fde8)
-	local party_24 = emu:read32(0x0203fdec)
-    --
-	local party_25 = emu:read32(0x0203fdf0)
-	local party_26 = emu:read32(0x0203fdf4)
-	local party_27 = emu:read32(0x0203fdf8)
-	local party_28 = emu:read32(0x0203fdfc)
-    --
-	local party_29 = emu:read32(0x0203fe00)
-	local party_30 = emu:read32(0x0203fe04)
-	local party_31 = emu:read32(0x0203fe08)
-	local party_32 = emu:read32(0x0203fe0c)
-    --
-	local party_33 = emu:read32(0x0203fe10)
-	local party_34 = emu:read32(0x0203fe14)
-	local party_35 = emu:read32(0x0203fe18)
-	local party_36 = emu:read32(0x0203fe1c)
-
-    if party_01 ~= 0 then
-        console:log("Your friend code is: " .. party_01 .. "-" .. party_02 .. "-" .. party_03 .. "-" .. party_04 .. "-" .. party_05 .. "-" .. party_06 .. "-" .. party_07 .. "-" .. party_08 .. "-" .. party_09 .. "-" .. party_10 .. "-" .. party_11 .. "-" .. party_12 .. "-" .. party_13 .. "-" .. party_14 .. "-" .. party_15 .. "-" .. party_16 .. "-" .. party_17 .. "-" .. party_18 .. "-" .. party_19 .. "-" .. party_20 .. "-" .. party_21 .. "-" .. party_22 .. "-" .. party_23 .. "-" .. party_24 .. "-" .. party_25 .. "-" .. party_26 .. "-" .. party_27 .. "-" .. party_28 .. "-" .. party_29 .. "-" .. party_30 .. "-" .. party_31 .. "-" .. party_32 .. "-" .. party_33 .. "-" .. party_34 .. "-" .. party_35 .. "-" .. party_36)
-    end
-
+function clearTrainerPartyRamData()
     --Clear the data
+	emu:write8(0x0203fd3e, 0)
+    --
+	emu:write32(0x0203fd40, 0)
+	emu:write32(0x0203fd44, 0)
+	emu:write32(0x0203fd48, 0)
+	emu:write32(0x0203fd4c, 0)
+    --
+	emu:write32(0x0203fd50, 0)
+	emu:write32(0x0203fd54, 0)
+	emu:write32(0x0203fd58, 0)
+	emu:write32(0x0203fd5c, 0)
+    --
+	emu:write32(0x0203fd60, 0)
+	emu:write32(0x0203fd64, 0)
+	emu:write32(0x0203fd68, 0)
+	emu:write32(0x0203fd6c, 0)
+    --
+	emu:write32(0x0203fd70, 0)
+	emu:write32(0x0203fd74, 0)
+	emu:write32(0x0203fd78, 0)
+	emu:write32(0x0203fd7c, 0)
+    --
 	emu:write32(0x0203fd80, 0)
 	emu:write32(0x0203fd84, 0)
 	emu:write32(0x0203fd88, 0)
@@ -210,47 +190,71 @@ function givePasswordMonTest()
 	emu:write32(0x0203fdc8, 0)
 	emu:write32(0x0203fdcc, 0)
     --
-	emu:write32(0x0203fde0, 0)
-	emu:write32(0x0203fde4, 0)
-	emu:write32(0x0203fde8, 0)
-	emu:write32(0x0203fdec, 0)
+	emu:write32(0x0203fdd0, 0)
+	emu:write32(0x0203fdd4, 0)
+	emu:write32(0x0203fdd8, 0)
     --
-	emu:write32(0x0203fdf0, 0)
-	emu:write32(0x0203fdf4, 0)
-	emu:write32(0x0203fdf8, 0)
-	emu:write32(0x0203fdfc, 0)
-    --
-	emu:write32(0x0203fe00, 0)
-	emu:write32(0x0203fe04, 0)
-	emu:write32(0x0203fe08, 0)
-	emu:write32(0x0203fe0c, 0)
-    --
-	emu:write32(0x0203fe10, 0)
-	emu:write32(0x0203fe14, 0)
-	emu:write32(0x0203fe18, 0)
-	emu:write32(0x0203fe1c, 0)
+    console:log("Cleared Trainer Data")
 end
 
-function getTrainerFriendCode()
-	local mon_00 = 502961192
-	local mon_01 = 842646459
-	local mon_02 = 3722500540
-	local mon_03 = 3187663061
-	local mon_04 = 1023485185
-	local mon_05 = 3474628
-	local mon_06 = 16516860
-	local mon_07 = 72967168
-	local mon_08 = 290557728
-    emu:write32(0x0203fd40, mon_00)
-    emu:write32(0x0203fd44, mon_01)
-    emu:write32(0x0203fd48, mon_02)
-    emu:write32(0x0203fd4c, mon_03)
-    emu:write32(0x0203fd50, mon_04)
-    emu:write32(0x0203fd54, mon_05)
-    emu:write32(0x0203fd58, mon_06)
-    emu:write32(0x0203fd5c, mon_07)
-    emu:write32(0x0203fd60, mon_08)
-    console:log("A Password Mon was received!")
+function checkTrainerPassword()
+	local party_00 =  emu:read8(0x0203fd3e)
+    --
+	local party_01 = emu:read32(0x0203fd40)
+	local party_02 = emu:read32(0x0203fd44)
+	local party_03 = emu:read32(0x0203fd48)
+	local party_04 = emu:read32(0x0203fd4c)
+    --
+	local party_05 = emu:read32(0x0203fd50)
+	local party_06 = emu:read32(0x0203fd54)
+	local party_07 = emu:read32(0x0203fd58)
+	local party_08 = emu:read32(0x0203fd5c)
+    --
+	local party_09 = emu:read32(0x0203fd60)
+	local party_10 = emu:read32(0x0203fd64)
+	local party_11 = emu:read32(0x0203fd68)
+	local party_12 = emu:read32(0x0203fd6c)
+    --
+	local party_13 = emu:read32(0x0203fd70)
+	local party_14 = emu:read32(0x0203fd74)
+	local party_15 = emu:read32(0x0203fd78)
+	local party_16 = emu:read32(0x0203fd7c)
+    --
+	local party_17 = emu:read32(0x0203fd80)
+	local party_18 = emu:read32(0x0203fd84)
+	local party_19 = emu:read32(0x0203fd88)
+	local party_20 = emu:read32(0x0203fd8c)
+    --
+	local party_21 = emu:read32(0x0203fd90)
+	local party_22 = emu:read32(0x0203fd94)
+	local party_23 = emu:read32(0x0203fd98)
+	local party_24 = emu:read32(0x0203fd9c)
+    --
+	local party_25 = emu:read32(0x0203fda0)
+	local party_26 = emu:read32(0x0203fda4)
+	local party_27 = emu:read32(0x0203fda8)
+	local party_28 = emu:read32(0x0203fdac)
+    --
+	local party_29 = emu:read32(0x0203fdb0)
+	local party_30 = emu:read32(0x0203fdb4)
+	local party_31 = emu:read32(0x0203fdb8)
+	local party_32 = emu:read32(0x0203fdbc)
+    --
+	local party_33 = emu:read32(0x0203fdc0)
+	local party_34 = emu:read32(0x0203fdc4)
+	local party_35 = emu:read32(0x0203fdc8)
+	local party_36 = emu:read32(0x0203fdcc)
+    --
+	local party_37 = emu:read32(0x0203fdd0)
+	local party_38 = emu:read32(0x0203fdd4)
+	local party_39 = emu:read32(0x0203fdd8)
+	--local party_40 = emu:read32(0x0203fdcc)
+
+    if party_00 == 1 then
+        console:log("This is your Trainer Password, make sure to copy it and save it somewhere safe so you can share it later")
+        console:log(party_01 .. "-" .. party_02 .. "-" .. party_03 .. "-" .. party_04 .. "-" .. party_05 .. "-" .. party_06 .. "-" .. party_07 .. "-" .. party_08 .. "-" .. party_09 .. "-" .. party_10 .. "-" .. party_11 .. "-" .. party_12 .. "-" .. party_13 .. "-" .. party_14 .. "-" .. party_15 .. "-" .. party_16 .. "-" .. party_17 .. "-" .. party_18 .. "-" .. party_19 .. "-" .. party_20 .. "-" .. party_21 .. "-" .. party_22 .. "-" .. party_23 .. "-" .. party_24 .. "-" .. party_25 .. "-" .. party_26 .. "-" .. party_27 .. "-" .. party_28 .. "-" .. party_29 .. "-" .. party_30 .. "-" .. party_31 .. "-" .. party_32 .. "-" .. party_33 .. "-" .. party_34 .. "-" .. party_35 .. "-" .. party_36 .. "-" .. party_37 .. "-" .. party_38 .. "-" .. party_39)
+        clearTrainerPartyRamData()
+    end
 end
 
 --local function read_file(path)
@@ -296,8 +300,8 @@ function printWelcomeMessage(buffer)
     end
 end
 
---callbacks:add("start", detectGame)
 callbacks:add("frame", globalFunction) -- Cries support
+
 if emu then
 	--this runs first
 	if not welcomeBuffer then
@@ -1107,7 +1111,7 @@ function socketMsgToFunction(msg)
         end
         --PasswordTrainerValue_36
         passwordTrainerValue36_b,  passwordTrainerValue36_e  = string.find(msg, "psswdval36trainer")
-        passwordTrainerValue36_b2, passwordTrainerValue36_e2 = string.find(msg, "receivedtrainerpassword")
+        passwordTrainerValue36_b2, passwordTrainerValue36_e2 = string.find(msg, "psswdval37trainer")
         if passwordTrainerValue36_b ~= null then
             type   = string.sub(msg, passwordTrainerValue36_b, passwordTrainerValue36_e)
             if type == "psswdval36trainer" then
@@ -1118,73 +1122,133 @@ function socketMsgToFunction(msg)
                     console:log("Password Trainer Value 36 Working: " .. PasswordTrainerValue_36 .. " Percent: " .. PasswordTrainer_percent)
                 end
             end
+        end        
+        --PasswordTrainerValue_37
+        passwordTrainerValue37_b,  passwordTrainerValue37_e  = string.find(msg, "psswdval37trainer")
+        passwordTrainerValue37_b2, passwordTrainerValue37_e2 = string.find(msg, "psswdval38trainer")
+        if passwordTrainerValue37_b ~= null then
+            type   = string.sub(msg, passwordTrainerValue37_b, passwordTrainerValue37_e)
+            if type == "psswdval37trainer" then
+                number = tonumber(string.sub(msg, passwordTrainerValue37_e + 1, passwordTrainerValue37_b2 - 1))
+                PasswordTrainerValue_37 = number
+                PasswordTrainer_percent = PasswordTrainer_percent + 1
+                if enableDebug == true then
+                    console:log("Password Trainer Value 37 Working: " .. PasswordTrainerValue_37 .. " Percent: " .. PasswordTrainer_percent)
+                end
+            end
         end
-        
+        --PasswordTrainerValue_38
+        passwordTrainerValue38_b,  passwordTrainerValue38_e  = string.find(msg, "psswdval38trainer")
+        passwordTrainerValue38_b2, passwordTrainerValue38_e2 = string.find(msg, "psswdval39trainer")
+        if passwordTrainerValue38_b ~= null then
+            type   = string.sub(msg, passwordTrainerValue38_b, passwordTrainerValue38_e)
+            if type == "psswdval38trainer" then
+                number = tonumber(string.sub(msg, passwordTrainerValue38_e + 1, passwordTrainerValue38_b2 - 1))
+                PasswordTrainerValue_38 = number
+                PasswordTrainer_percent = PasswordTrainer_percent + 1
+                if enableDebug == true then
+                    console:log("Password Trainer Value 38 Working: " .. PasswordTrainerValue_38 .. " Percent: " .. PasswordTrainer_percent)
+                end
+            end
+        end
+        --PasswordTrainerValue_39
+        passwordTrainerValue39_b,  passwordTrainerValue39_e  = string.find(msg, "psswdval39trainer")
+        passwordTrainerValue39_b2, passwordTrainerValue39_e2 = string.find(msg, "receivedtrainerpassword")
+        if passwordTrainerValue39_b ~= null then
+            type   = string.sub(msg, passwordTrainerValue39_b, passwordTrainerValue39_e)
+            if type == "psswdval39trainer" then
+                number = tonumber(string.sub(msg, passwordTrainerValue39_e + 1, passwordTrainerValue39_b2 - 1))
+                PasswordTrainerValue_39 = number
+                PasswordTrainer_percent = PasswordTrainer_percent + 1
+                if enableDebug == true then
+                    console:log("Password Trainer Value 39 Working: " .. PasswordTrainerValue_39 .. " Percent: " .. PasswordTrainer_percent)
+                end
+            end
+        end
 
-        if(PasswordTrainer_percent == 36) then
+        if(PasswordTrainer_percent == 39) then
             GetPasswordTrainer()
+        end
+
+        --WebConnected
+        WebConnected_b,  WebConnected_e  = string.find(msg, "webconnectedstart")
+        WebConnected_b2, WebConnected_e2 = string.find(msg, "receivedwebconnected")
+        if WebConnected_b ~= null then
+            type   = string.sub(msg, WebConnected_b, WebConnected_e)
+            if type == "webconnectedstart" then
+                number = tonumber(string.sub(msg, WebConnected_e + 1, WebConnected_b2 - 1))
+                web_connected = number;
+                console:log("Web Connected Working: " .. web_connected)
+                if enableDebug == true then
+                    console:log("Web Connected Working: " .. web_connected)
+                end
+            end
         end
 end
 
 function GetPasswordTrainer()
-    emu:write32(0x0203fd80, PasswordTrainerValue_1)
-	emu:write32(0x0203fd84, PasswordTrainerValue_2)
-	emu:write32(0x0203fd88, PasswordTrainerValue_3)
-	emu:write32(0x0203fd8c, PasswordTrainerValue_4)
+    emu:write32(0x0203fd40, PasswordTrainerValue_1)
+	emu:write32(0x0203fd44, PasswordTrainerValue_2)
+	emu:write32(0x0203fd48, PasswordTrainerValue_3)
+	emu:write32(0x0203fd4c, PasswordTrainerValue_4)
     --
-	emu:write32(0x0203fd90, PasswordTrainerValue_5)
-	emu:write32(0x0203fd94, PasswordTrainerValue_6)
-	emu:write32(0x0203fd98, PasswordTrainerValue_7)
-	emu:write32(0x0203fd9c, PasswordTrainerValue_8)
+	emu:write32(0x0203fd50, PasswordTrainerValue_5)
+	emu:write32(0x0203fd54, PasswordTrainerValue_6)
+	emu:write32(0x0203fd58, PasswordTrainerValue_7)
+	emu:write32(0x0203fd5c, PasswordTrainerValue_8)
     --
-	emu:write32(0x0203fda0, PasswordTrainerValue_9)
-	emu:write32(0x0203fda4, PasswordTrainerValue_10)
-	emu:write32(0x0203fda8, PasswordTrainerValue_11)
-	emu:write32(0x0203fdac, PasswordTrainerValue_12)
+	emu:write32(0x0203fd60, PasswordTrainerValue_9)
+	emu:write32(0x0203fd64, PasswordTrainerValue_10)
+	emu:write32(0x0203fd68, PasswordTrainerValue_11)
+	emu:write32(0x0203fd6c, PasswordTrainerValue_12)
     --
-	emu:write32(0x0203fdb0, PasswordTrainerValue_13)
-	emu:write32(0x0203fdb4, PasswordTrainerValue_14)
-	emu:write32(0x0203fdb8, PasswordTrainerValue_15)
-	emu:write32(0x0203fdbc, PasswordTrainerValue_16)
+	emu:write32(0x0203fd70, PasswordTrainerValue_13)
+	emu:write32(0x0203fd74, PasswordTrainerValue_14)
+	emu:write32(0x0203fd78, PasswordTrainerValue_15)
+	emu:write32(0x0203fd7c, PasswordTrainerValue_16)
     --
-	emu:write32(0x0203fdc0, PasswordTrainerValue_17)
-	emu:write32(0x0203fdc4, PasswordTrainerValue_18)
-	emu:write32(0x0203fdc8, PasswordTrainerValue_19)
-	emu:write32(0x0203fdcc, PasswordTrainerValue_20)
+	emu:write32(0x0203fd80, PasswordTrainerValue_17)
+	emu:write32(0x0203fd84, PasswordTrainerValue_18)
+	emu:write32(0x0203fd88, PasswordTrainerValue_19)
+	emu:write32(0x0203fd8c, PasswordTrainerValue_20)
     --
-	emu:write32(0x0203fde0, PasswordTrainerValue_21)
-	emu:write32(0x0203fde4, PasswordTrainerValue_22)
-	emu:write32(0x0203fde8, PasswordTrainerValue_23)
-	emu:write32(0x0203fdec, PasswordTrainerValue_24)
+	emu:write32(0x0203fd90, PasswordTrainerValue_21)
+	emu:write32(0x0203fd94, PasswordTrainerValue_22)
+	emu:write32(0x0203fd98, PasswordTrainerValue_23)
+	emu:write32(0x0203fd9c, PasswordTrainerValue_24)
     --
-	emu:write32(0x0203fdf0, PasswordTrainerValue_25)
-	emu:write32(0x0203fdf4, PasswordTrainerValue_26)
-	emu:write32(0x0203fdf8, PasswordTrainerValue_27)
-	emu:write32(0x0203fdfc, PasswordTrainerValue_28)
+	emu:write32(0x0203fda0, PasswordTrainerValue_25)
+	emu:write32(0x0203fda4, PasswordTrainerValue_26)
+	emu:write32(0x0203fda8, PasswordTrainerValue_27)
+	emu:write32(0x0203fdac, PasswordTrainerValue_28)
     --
-	emu:write32(0x0203fe00, PasswordTrainerValue_29)
-	emu:write32(0x0203fe04, PasswordTrainerValue_30)
-	emu:write32(0x0203fe08, PasswordTrainerValue_31)
-	emu:write32(0x0203fe0c, PasswordTrainerValue_32)
+	emu:write32(0x0203fdb0, PasswordTrainerValue_29)
+	emu:write32(0x0203fdb4, PasswordTrainerValue_30)
+	emu:write32(0x0203fdb8, PasswordTrainerValue_31)
+	emu:write32(0x0203fdbc, PasswordTrainerValue_32)
     --
-	emu:write32(0x0203fe10, PasswordTrainerValue_33)
-	emu:write32(0x0203fe14, PasswordTrainerValue_34)
-	emu:write32(0x0203fe18, PasswordTrainerValue_35)
-	emu:write32(0x0203fe1c, PasswordTrainerValue_36)
+	emu:write32(0x0203fdc0, PasswordTrainerValue_33)
+	emu:write32(0x0203fdc4, PasswordTrainerValue_34)
+	emu:write32(0x0203fdc8, PasswordTrainerValue_35)
+	emu:write32(0x0203fdcc, PasswordTrainerValue_36)
+    --
+	emu:write32(0x0203fdd0, PasswordTrainerValue_37)
+	emu:write32(0x0203fdd4, PasswordTrainerValue_38)
+	emu:write32(0x0203fdd8, PasswordTrainerValue_39)
     console:log("A Password Trainer was received!")
     PasswordTrainer_percent = 0
 end
 
 function givePasswordMon()
-    emu:write32(0x0203fd40, PasswordValue_0)
-    emu:write32(0x0203fd44, PasswordValue_1)
-    emu:write32(0x0203fd48, PasswordValue_2)
-    emu:write32(0x0203fd4c, PasswordValue_3)
-    emu:write32(0x0203fd50, PasswordValue_4)
-    emu:write32(0x0203fd54, PasswordValue_5)
-    emu:write32(0x0203fd58, PasswordValue_6)
-    emu:write32(0x0203fd5c, PasswordValue_7)
-    emu:write32(0x0203fd60, PasswordValue_8)
+    emu:write32(0x0203fddc, PasswordValue_0)
+    emu:write32(0x0203fde0, PasswordValue_1)
+    emu:write32(0x0203fde4, PasswordValue_2)
+    emu:write32(0x0203fde8, PasswordValue_3)
+    emu:write32(0x0203fdec, PasswordValue_4)
+    emu:write32(0x0203fdf0, PasswordValue_5)
+    emu:write32(0x0203fdf4, PasswordValue_6)
+    emu:write32(0x0203fdf8, PasswordValue_7)
+    emu:write32(0x0203fdfc, PasswordValue_8)
     console:log("A Password Mon was received!")
     Password_percent = 0
 end
@@ -1227,10 +1291,10 @@ function createRoamer()
 end
 
 --Socket Server
-lastkeys = nil
-server = nil
+lastkeys   = nil
+server     = nil
 ST_sockets = {}
-nextID = 1
+nextID     = 1
 
 local KEY_NAMES = { "A", "B", "s", "S", "<", ">", "^", "v", "R", "L" }
 
@@ -1252,12 +1316,13 @@ function ST_format(id, msg, isError)
 end
 
 function ST_error(id, err)
-	--console:error(ST_format(id, err, true))
+	console:error(ST_format(id, err, true))
 	ST_stop(id)
 end
 
 function ST_received(id)
 	local sock = ST_sockets[id]
+    socketID = id
 	if not sock then return end
 	while true do
 		local p, err = sock:receive(1024)
@@ -1295,6 +1360,31 @@ function ST_scankeys()
 	end
 end
 
+function ST_start()
+	local sock = ST_sockets[socketID]
+    local cryspecies = emu:read16(adress_currentcry)
+	local species = speciesNames[cryspecies]
+    local testmessage = "webconnectedstart1receivedwebconnected"
+
+    if web_connected == 0 then
+        sockettest = socket.tcp()
+        if cryspecies ~= 0 then 
+            if sockettest:connect("127.0.0.1", 8888) then
+                console:log("Connection successful")
+                --sockettest:send(testmessage)
+                --console:log("Successfully sent: ".. species)
+                sockettest:send(species)
+                lastkeys = nil
+            else
+                console:log("Connection Error")
+            end
+            emu:write16(adress_currentcry, 0) -- Clear the Pokemon Cry value
+        end 
+    end
+end
+
+callbacks:add("start", ST_start)
+
 function ST_accept()
 	local sock, err = server:accept()
 	if err then
@@ -1305,6 +1395,7 @@ function ST_accept()
 	nextID = id + 1
 	ST_sockets[id] = sock
 	sock:add("received", function() ST_received(id) end)
+	--sock:add("sent", function() ST_sendCryMessage(id) end)
 	sock:add("error", function() ST_error(id) end)
 	--console:log(ST_format(id, "Connected"))
 end
@@ -1334,7 +1425,6 @@ while not server do
 		end
 	end
 end
---
 
 --this is the filename of each cry
 speciesNames = {
